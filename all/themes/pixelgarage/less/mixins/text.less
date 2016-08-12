@@ -1,0 +1,135 @@
+/*
+ *  Text mixins
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+#pxl-mixins {
+  //
+  //  TEXT optimisation
+  //
+
+  // Language dependant word hyphenation (language has to be set in html element)
+  .hyphenate(@mode: auto) {
+    // Warning: Needed for oldIE support, but words are broken up letter-by-letter
+    //-ms-word-break: break-all;
+    //word-break: break-all;
+
+    // Non standard for webkit, breaks between words
+    word-break: break-word;
+
+    // uses dictionaries for correct word breaking in supported languages
+    -webkit-hyphens: @mode;
+    -moz-hyphens: @mode;
+    -ms-hyphens: @mode;
+    -o-hyphens: @mode;
+    hyphens: @mode;
+  }
+
+  // Sharper font smoothing for modern browsers
+  .sharp-fonts() {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    // Subpixel Rendering -> https://www.mobomo.com/2014/05/better-font-smoothing-in-chrome-on-mac-os-x
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.25),
+    only screen and ( min-device-pixel-ratio: 1.25),
+    only screen and ( min-resolution: 200dpi),
+    only screen and ( min-resolution: 1.25dppx) {
+      -webkit-font-smoothing: subpixel-antialiased;
+    }
+  }
+
+  // responsive font size with minimum and maximum size
+  .font-size-responsive(@min-size; @max-size) {
+    font-size: @min-size;
+
+    @media @narrow {
+      font-size: unit(@max-size/7.68, vw);
+    }
+    @media @tablet {
+      font-size: @max-size;
+    }
+  }
+  .font-size-responsive(@max-size: @resp-font-size-max) {
+    font-size: max(@resp-font-size-min, @max-size*5/8);   // min = 480 / 768 * max
+
+    @media @narrow {
+      font-size: unit(@max-size/7.68, vw);
+    }
+    @media @tablet {
+      font-size: @max-size;
+    }
+  }
+
+
+  .wysiwyg-body(@font-size-text: 14px; @font-size-title: 24px; @font-size-subtitle: @resp-font-size-max) {
+    h1, h2, h3, h4, h5, h6 {
+      font-family: @pxl-text-font;
+      .font-size-responsive(@font-size-subtitle);
+    }
+    h1, h2, h3 {
+      .font-size-responsive(@font-size-title);
+    }
+
+    p, div, tbody td {
+      font-family: @pxl-text-font-light;
+      font-size: @font-size-text;
+      .hyphenate;
+
+      @media @narrow {
+        font-size: @font-size-base;
+      }
+    }
+
+    li {
+      font-family: @pxl-text-font-light;
+      font-size: @font-size-text;
+
+      @media @narrow {
+        font-size: @font-size-base;
+      }
+    }
+
+    pre, address {
+      font-family: @pxl-text-font-light-italics;
+      font-size: @font-size-text;
+
+      @media @narrow {
+        font-size: @font-size-base;
+      }
+    }
+
+    hr {
+      border: 0;
+      border-bottom: 2px solid @pxl-border-color;
+      background: none;
+    }
+
+    table, tr, th, td {
+      border-color: @pxl-border-color;
+    }
+
+    img {
+      display: block;
+      margin: 0 auto;
+      width: 80%;
+      height: auto;
+      max-width: 100%;
+    }
+
+    embed, video, audio, iframe {
+      display: block;
+      overflow: hidden;
+      margin: 20px auto;
+      width: 80% !important;
+      max-width: 100%;
+      height: auto;
+      min-height: 350px;
+    }
+  }
+
+}

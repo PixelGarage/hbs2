@@ -1,0 +1,95 @@
+/*
+ *  Banners view (navigation)
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+
+// Main settings
+// -------------------------
+.view-banners {
+  .view-content {
+    .carousel {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      height: auto;
+
+      > .carousel-inner {
+        margin-top: 0;
+
+        .item {
+          .views-field-field-picture {
+            position: relative;
+            img {
+              #pxl-mixins.center-horizontally;
+              max-width: 133.333333%;
+              height: auto;
+            }
+          }
+
+          &.active {
+
+          }
+        }
+      }
+
+      // fading carousel
+      &.carousel-fade {
+        > .carousel-inner {
+          .item {
+            opacity: 0;
+            #pxl-mixins.transition(opacity 2s);
+
+            &.active {
+              opacity: 1.0;
+
+              &.left, &.right {
+                left: 0;
+                opacity: 0;
+                z-index: 1;
+              }
+            }
+            &.left.next, &.right.prev {
+              opacity: 1.0;
+            }
+          }
+        }
+      }
+
+      > .carousel-indicators {
+        display: none;
+        position: absolute;
+        top: auto;
+        bottom: 10px;
+        right: 20px;
+        left: auto;
+        margin: 0;
+        width: auto;
+
+        li {
+          margin: 0 5px;
+          width: 14px;
+          height: 14px;
+          border: 2px solid #fff;
+          background: none;
+
+          &.active {
+            background: #fff;
+          }
+        }
+      }
+
+      > a.carousel-control {
+        display: none;
+        z-index: 2;
+      }
+    }
+  }
+}

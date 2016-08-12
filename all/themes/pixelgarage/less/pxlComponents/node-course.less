@@ -1,0 +1,98 @@
+/*
+ *  Course content type
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+.links(@seg-color) {
+  a {
+    color: @seg-color;
+    text-decoration: none;
+
+    &:hover, &.active, &:focus {
+      text-decoration: underline;
+    }
+  }
+}
+
+
+
+// General settings
+// -------------------------
+.node.node-course{
+  .row {
+    .col-sm-12 {
+      .field-name-body {
+        table.aufeinenblock, // legacy
+        table.aufeinenblick {
+          margin: 0 0 50px;
+
+          >p, >caption {
+            // do not show table caption
+            display: none;
+          }
+
+          tbody {
+            padding: 0 20px;
+
+            tr {
+              border-top: 1px solid @pxl-border-color;
+
+              th, td {
+                display: block;
+                padding: 15px 10px 15px 0;
+                width: 100% !important;
+                font-family: @pxl-text-font-medium;
+                font-size: @font-size-small;
+                color: @text-color;
+                vertical-align: top;
+              }
+              td {
+                font-family: @pxl-text-font-light;
+              }
+
+              &:last-child  {
+                border-bottom: 1px solid @pxl-border-color;
+              }
+
+              @media @tablet {
+                th {
+                  display: table-cell;
+                  width: 33% !important;
+                  font-size: @font-size-base;
+                }
+                td {
+                  display: table-cell;
+                  width: 67% !important;
+                  font-size: @font-size-base;
+                }
+              }
+            }
+          }
+        }
+
+        body.kvcollege_section & {
+          .links(@pxl-color-hso-kv);
+        }
+        body.hscollege_section & {
+          .links(@pxl-color-hso-hs);
+        }
+        body.kscollege_section & {
+          .links(@pxl-color-hso-ks);
+        }
+        body.excollege_section & {
+          .links(@pxl-color-hso-ex);
+        }
+      }
+
+      .field-name-course-tab {
+        // see view-course-tabs
+      }
+
+    }
+  }
+}

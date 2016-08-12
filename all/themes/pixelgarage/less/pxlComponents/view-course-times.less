@@ -1,0 +1,153 @@
+/*
+ *  View Course-times component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+@table-font-size: (@font-size-base - 1);
+
+
+// Mixins
+// -------------------------
+
+
+// General settings
+// -------------------------
+.view.view-course-times,
+.view.view-course-times-search {
+  .view-header {
+    // intro text
+    padding: 30px 15px;
+
+    p {
+      margin: 0;
+      width: 90%;
+      font-family: @pxl-text-font-light;
+      font-size: @font-size-base;
+      text-align: left;
+      color: @pxl-color-gray-text;
+    }
+  }
+
+  .view-content {
+    // course times table
+    padding: 0;
+
+    table {
+      width: 100%;
+
+      thead {
+        tr {
+          th {
+            position: relative;
+            padding: 5px 5px 10px;
+            font-family: @pxl-text-font-medium;
+            font-size: @table-font-size;
+            border: none;
+
+            a {
+              color: @text-color;
+
+              &:hover {
+                color: @pxl-color-gray-dark;
+              }
+
+              img {
+                // sort icon
+                display: inline-block;
+                position: absolute;
+                right: 10px;
+              }
+            }
+
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          padding: 0;
+          border: none;
+          height: 70px;
+
+          &.even {
+            background-color: #fff;
+          }
+
+          &.odd {
+            background-color: @pxl-color-hso-gray;
+          }
+
+          td {
+            padding: 8px;
+            vertical-align: middle;
+            font-family: @pxl-text-font-light;
+            font-size: @table-font-size;
+            color: @text-color;
+            border: none;
+
+            a {
+              color: @text-color;
+            }
+
+            &.active {
+              background: none;
+            }
+
+            &.views-field-field-course-date {
+              white-space: nowrap;
+              line-height: 25px;
+            }
+
+            &.views-field-field-location {
+              text-align: center;
+            }
+
+            &.views-field-body {
+              min-width: 130px;
+              p {
+                font-size: @table-font-size;
+              }
+            }
+
+            &.views-field-field-brand {
+              text-align: center;
+
+              img {
+                height: 30px;
+              }
+            }
+
+            &.views-field-nothing {
+              text-align: right;
+
+              a {
+                #pxl-mixins.button-normal;
+                display: inline-block;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .text-center {
+    #pxl-mixins.view-pager(@font-size-base, @pxl-color-gray-text, @pxl-color-hso-main);
+  }
+}
+
+.view.view-course-times-search {
+  .view-header {
+    padding: 30px 0;
+  }
+
+  .view-content {
+    .table-responsive {
+      border: 1px solid @pxl-color-gray-border-light;
+    }
+  }
+
+
+}
+

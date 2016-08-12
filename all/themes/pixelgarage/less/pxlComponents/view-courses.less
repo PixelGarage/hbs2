@@ -1,0 +1,185 @@
+/*
+ *  View courses component
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+
+// Mixins
+// -------------------------
+
+
+
+// General settings
+// -------------------------
+.view.view-courses {
+  .view-content {
+    margin: 50px 0;
+
+    .panel-group {
+      margin: 0;
+
+      .main-title {
+        h1 {
+          margin: 50px 0 0;
+          padding: 0;
+          font-family: @pxl-text-font-light;
+          #pxl-mixins.font-size-responsive(@font-size-h1);
+          color: @text-color;
+          line-height: 1;
+
+          body.kvcollege_section & {
+            color: @pxl-color-hso-kv;
+          }
+          body.hscollege_section & {
+            color: @pxl-color-hso-hs;
+          }
+          body.kscollege_section & {
+            color: @pxl-color-hso-ks;
+          }
+          body.excollege_section & {
+            color: @pxl-color-hso-ex;
+          }
+        }
+      }
+
+      .course-subject {
+        // fachgebiet title
+        h2 {
+          margin: 15px 0 0;
+          padding: 20px 0 24px;
+          font-family: @pxl-text-font-medium;
+          font-size: @font-size-base + 2;
+          color: @text-color;
+          line-height: 1;
+          border-top: 1px solid @pxl-border-color;
+        }
+      }
+
+      .panel {
+        margin: 0;
+        border: none;
+        background: transparent none;
+        #pxl-mixins.box-shadow(none);
+
+        .panel-heading {
+          position: relative;
+          margin-bottom: 0;
+          padding: 0;
+          font-family: @pxl-text-font-light;
+          line-height: 1;
+          #pxl-mixins.border-radius(0);
+          background: none;
+
+          .panel-title {
+            display: inline-block;
+            width: 100%;
+
+            a {
+              display: block;
+              width: 100%;
+              padding: 9px 10px 11px;
+              font-size: 14px;
+              color: @text-color;
+              text-decoration: none;
+            }
+          }
+
+          .short-description {
+            // in Kürze
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 25px;
+            padding: 0;
+
+            a {
+              display: inline-block;
+              padding: 9px 10px 11px;
+              font-size: 14px;
+              color: #fff;
+              text-decoration: none;
+            }
+
+            .fa {
+              // caret-down
+              color: #fff;
+            }
+          }
+
+          @media @narrow {
+            .panel-title,
+            .short-description {
+              a {
+                padding: 9px 10px 10px;
+                font-size: 15px;
+              }
+            }
+
+          }
+
+          @media @tablet {
+            .panel-title,
+            .short-description {
+              display: inline-block;
+
+              a {
+                padding: 7px 10px 9px;
+                font-size: 18px;
+              }
+            }
+          }
+
+          &:hover {
+            .panel-title {
+              a {
+                color: #fff;
+              }
+            }
+          }
+          body.kvcollege_section &:hover {
+            background-color: @pxl-color-hso-kv;
+          }
+          body.hscollege_section &:hover {
+            background-color: @pxl-color-hso-hs;
+          }
+          body.kscollege_section &:hover {
+            background-color: @pxl-color-hso-ks;
+          }
+          body.excollege_section &:hover {
+            background-color: @pxl-color-hso-ex;
+          }
+
+        }
+
+        .panel-collapse {
+          .panel-body {
+            margin: 10px 0;
+            padding: 10px 10px 20px;
+            font-family: @pxl-text-font-light;
+            color: @text-color-light;
+            border: none;
+
+            body.kvcollege_section & {
+              border-top: 1px solid @pxl-color-hso-kv;
+              border-bottom: 1px solid @pxl-color-hso-kv;
+            }
+            body.hscollege_section & {
+              border-top: 1px solid @pxl-color-hso-hs;
+              border-bottom: 1px solid @pxl-color-hso-hs;
+            }
+            body.kscollege_section & {
+              border-top: 1px solid @pxl-color-hso-ks;
+              border-bottom: 1px solid @pxl-color-hso-ks;
+            }
+            body.excollege_section & {
+              border-top: 1px solid @pxl-color-hso-ex;
+              border-bottom: 1px solid @pxl-color-hso-ex;
+            }
+          }
+        }
+      }
+    }
+  }
+}
