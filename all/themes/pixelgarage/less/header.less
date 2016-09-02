@@ -190,6 +190,19 @@ header#navbar {
                 }
               }
             }
+            &.menu-la {
+              border-bottom: @pxl-menu-border-thickness solid @pxl-color-hso-la;
+
+              a:hover, a.active-trail, a.active {
+                color: @pxl-color-hso-la;
+                background: none;
+
+                @media @tablet {
+                  color: #fff;
+                  background-color: @pxl-color-hso-la;
+                }
+              }
+            }
           }
 
         }
