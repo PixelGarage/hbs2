@@ -15580,6 +15580,7 @@ header#navbar a.logo img {
   max-height: 60px;
   height: 60px;
   width: auto;
+  max-width: 240px;
 }
 header#navbar .container {
   padding: 10px 15px 0;
@@ -16096,10 +16097,9 @@ body.excollege_section .main-container .container .row section h1.page-header {
 .subfooter .container .region-subfooter .block-nodeblock .node-footer.view-mode-subfooter .row .col-sm-6 .field-name-copyright .field-name-body .field-item div a {
   display: inline-block;
   padding: 10px 0 10px 5px;
-  width: 80%;
 }
 .subfooter .container .region-subfooter .block-nodeblock .node-footer.view-mode-subfooter .row .col-sm-6 .field-name-copyright .field-name-body .field-item div a img {
-  width: 100%;
+  max-width: 100%;
   height: auto;
 }
 .subfooter .container .region-subfooter .block-nodeblock .node-footer.view-mode-subfooter .row .col-sm-6 .field-name-certificates {
