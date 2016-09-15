@@ -15728,12 +15728,12 @@ header#navbar .container .navbar-collapse nav ul.menu li.menu-ex a.active {
   }
 }
 header#navbar .container .navbar-collapse nav ul.menu li.menu-la {
-  border-bottom: 6px solid #870b12;
+  border-bottom: 6px solid #d82a33;
 }
 header#navbar .container .navbar-collapse nav ul.menu li.menu-la a:hover,
 header#navbar .container .navbar-collapse nav ul.menu li.menu-la a.active-trail,
 header#navbar .container .navbar-collapse nav ul.menu li.menu-la a.active {
-  color: #870b12;
+  color: #d82a33;
   background: none;
 }
 @media screen and (min-width: 768px) {
@@ -15741,7 +15741,7 @@ header#navbar .container .navbar-collapse nav ul.menu li.menu-la a.active {
   header#navbar .container .navbar-collapse nav ul.menu li.menu-la a.active-trail,
   header#navbar .container .navbar-collapse nav ul.menu li.menu-la a.active {
     color: #fff;
-    background-color: #870b12;
+    background-color: #d82a33;
   }
 }
 header#navbar .container .navbar-collapse nav ul.menu.secondary {
