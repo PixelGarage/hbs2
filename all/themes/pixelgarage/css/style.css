@@ -11021,9 +11021,6 @@ form.webform-client-form fieldset.panel .panel-body {
   padding: 20px 0;
   border: none;
 }
-form.webform-client-form fieldset.panel .panel-body .help-block {
-  display: none;
-}
 form.webform-client-form [id$=ajax-wrapper] {
   /* multi-file upload container */
   overflow: auto;
@@ -11139,7 +11136,8 @@ form.webform-client-form .webform-component .control-label {
 form.webform-client-form .webform-component .control-label span.form-required {
   color: #333333;
 }
-form.webform-client-form .webform-component div.description {
+form.webform-client-form .webform-component div.description,
+form.webform-client-form .webform-component .help-block {
   display: block;
   margin: 0;
   padding: 5px 0 10px;
@@ -15129,7 +15127,7 @@ body.excollege_section .view.view-courses .view-content .panel-group .panel .pan
 }
 .view.view-course-times .view-content table tbody tr td.views-field-field-brand img,
 .view.view-course-times-search .view-content table tbody tr td.views-field-field-brand img {
-  height: 30px;
+  height: 20px;
 }
 .view.view-course-times .view-content table tbody tr td.views-field-nothing,
 .view.view-course-times-search .view-content table tbody tr td.views-field-nothing {
