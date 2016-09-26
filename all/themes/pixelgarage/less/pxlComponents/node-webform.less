@@ -166,6 +166,9 @@ form.webform-client-form {
   body.excollege_section & {
     .links(@pxl-color-hso-ex);
   }
+  body.language_section & {
+    .links(@pxl-color-hso-la);
+  }
 
   //
   // all fieldsets
@@ -322,6 +325,10 @@ form.webform-client-form {
         border: 1px solid @pxl-color-hso-ex;
         .box-shadow(inset 0 0 3px @pxl-color-hso-ex);
       }
+      body.language_section & {
+        border: 1px solid @pxl-color-hso-la;
+        .box-shadow(inset 0 0 3px @pxl-color-hso-la);
+      }
     }
 
     .form-textarea-wrapper {
@@ -361,6 +368,9 @@ form.webform-client-form {
         }
         body.excollege_section & {
           border: 1px solid @pxl-color-hso-ex;
+        }
+        body.language_section & {
+          border: 1px solid @pxl-color-hso-la;
         }
       }
     }
@@ -560,6 +570,9 @@ form.webform-client-form {
       }
       body.excollege_section & {
         .resp-submit-button(#fff, @pxl-color-hso-ex);
+      }
+      body.language_section & {
+        .resp-submit-button(#fff, @pxl-color-hso-la);
       }
     }
   }

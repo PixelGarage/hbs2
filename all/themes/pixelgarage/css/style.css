@@ -10996,6 +10996,33 @@ body.excollege_section form.webform-client-form a.active,
 body.excollege_section form.webform-client-form a:focus {
   text-decoration: underline;
 }
+body.language_section form.webform-client-form a {
+  color: #d82a33;
+  text-decoration: none;
+}
+body.language_section form.webform-client-form a:hover,
+body.language_section form.webform-client-form a.active,
+body.language_section form.webform-client-form a:focus {
+  text-decoration: underline;
+}
+body.language_section form.webform-client-form a {
+  color: #d82a33;
+  text-decoration: none;
+}
+body.language_section form.webform-client-form a:hover,
+body.language_section form.webform-client-form a.active,
+body.language_section form.webform-client-form a:focus {
+  text-decoration: underline;
+}
+body.language_section form.webform-client-form a {
+  color: #d82a33;
+  text-decoration: none;
+}
+body.language_section form.webform-client-form a:hover,
+body.language_section form.webform-client-form a.active,
+body.language_section form.webform-client-form a:focus {
+  text-decoration: underline;
+}
 form.webform-client-form fieldset.panel {
   margin: 0 0 30px;
   border: none;
@@ -11190,6 +11217,12 @@ body.excollege_section form.webform-client-form .webform-component textarea:focu
   -webkit-box-shadow: inset 0 0 3px #b1a895;
   box-shadow: inset 0 0 3px #b1a895;
 }
+body.language_section form.webform-client-form .webform-component input:focus,
+body.language_section form.webform-client-form .webform-component textarea:focus {
+  border: 1px solid #d82a33;
+  -webkit-box-shadow: inset 0 0 3px #d82a33;
+  box-shadow: inset 0 0 3px #d82a33;
+}
 form.webform-client-form .webform-component .form-textarea-wrapper div.grippie {
   display: none;
 }
@@ -11231,6 +11264,10 @@ body.kscollege_section form.webform-client-form .webform-component select:active
 body.excollege_section form.webform-client-form .webform-component select:focus,
 body.excollege_section form.webform-client-form .webform-component select:active {
   border: 1px solid #b1a895;
+}
+body.language_section form.webform-client-form .webform-component select:focus,
+body.language_section form.webform-client-form .webform-component select:active {
+  border: 1px solid #d82a33;
 }
 form.webform-client-form .webform-component .form-radios .form-item,
 form.webform-client-form .webform-component .form-checkboxes .form-item {
@@ -11524,6 +11561,30 @@ body.excollege_section form.webform-client-form div.form-actions button.webform-
 body.excollege_section form.webform-client-form div.form-actions button.webform-submit:focus {
   background: #ff757d;
 }
+body.language_section form.webform-client-form div.form-actions button.webform-submit {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 13px 0 15px;
+  width: 60%;
+  min-width: 160px;
+  height: 44px;
+  font-family: 'SohoGothicProRegular', serif;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: #fff;
+  border: none;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background: #ff535d;
+}
+body.language_section form.webform-client-form div.form-actions button.webform-submit:hover,
+body.language_section form.webform-client-form div.form-actions button.webform-submit:focus {
+  background: #ff757d;
+}
 /*
  *  Course content type
  * --------------------------------------------------*/
@@ -11685,6 +11746,33 @@ body.excollege_section .node.node-course .row .col-sm-12 .field-name-body a {
 body.excollege_section .node.node-course .row .col-sm-12 .field-name-body a:hover,
 body.excollege_section .node.node-course .row .col-sm-12 .field-name-body a.active,
 body.excollege_section .node.node-course .row .col-sm-12 .field-name-body a:focus {
+  text-decoration: underline;
+}
+body.language_section .node.node-course .row .col-sm-12 .field-name-body a {
+  color: #d82a33;
+  text-decoration: none;
+}
+body.language_section .node.node-course .row .col-sm-12 .field-name-body a:hover,
+body.language_section .node.node-course .row .col-sm-12 .field-name-body a.active,
+body.language_section .node.node-course .row .col-sm-12 .field-name-body a:focus {
+  text-decoration: underline;
+}
+body.language_section .node.node-course .row .col-sm-12 .field-name-body a {
+  color: #d82a33;
+  text-decoration: none;
+}
+body.language_section .node.node-course .row .col-sm-12 .field-name-body a:hover,
+body.language_section .node.node-course .row .col-sm-12 .field-name-body a.active,
+body.language_section .node.node-course .row .col-sm-12 .field-name-body a:focus {
+  text-decoration: underline;
+}
+body.language_section .node.node-course .row .col-sm-12 .field-name-body a {
+  color: #d82a33;
+  text-decoration: none;
+}
+body.language_section .node.node-course .row .col-sm-12 .field-name-body a:hover,
+body.language_section .node.node-course .row .col-sm-12 .field-name-body a.active,
+body.language_section .node.node-course .row .col-sm-12 .field-name-body a:focus {
   text-decoration: underline;
 }
 /*
@@ -14439,6 +14527,33 @@ body.excollege_section .view.view-segment-pages .view-content .views-row a.activ
 body.excollege_section .view.view-segment-pages .view-content .views-row a:focus {
   text-decoration: underline;
 }
+body.language_section .view.view-segment-pages .view-content .views-row a {
+  color: #d82a33;
+  text-decoration: none;
+}
+body.language_section .view.view-segment-pages .view-content .views-row a:hover,
+body.language_section .view.view-segment-pages .view-content .views-row a.active,
+body.language_section .view.view-segment-pages .view-content .views-row a:focus {
+  text-decoration: underline;
+}
+body.language_section .view.view-segment-pages .view-content .views-row a {
+  color: #d82a33;
+  text-decoration: none;
+}
+body.language_section .view.view-segment-pages .view-content .views-row a:hover,
+body.language_section .view.view-segment-pages .view-content .views-row a.active,
+body.language_section .view.view-segment-pages .view-content .views-row a:focus {
+  text-decoration: underline;
+}
+body.language_section .view.view-segment-pages .view-content .views-row a {
+  color: #d82a33;
+  text-decoration: none;
+}
+body.language_section .view.view-segment-pages .view-content .views-row a:hover,
+body.language_section .view.view-segment-pages .view-content .views-row a.active,
+body.language_section .view.view-segment-pages .view-content .views-row a:focus {
+  text-decoration: underline;
+}
 /*
  *  View locations component
  * --------------------------------------------------*/
@@ -14715,6 +14830,9 @@ body.kscollege_section .view.view-contacts .view-content .views-bootstrap-tab-pl
 body.excollege_section .view.view-contacts .view-content .views-bootstrap-tab-plugin-style .tab-content .tab-pane .tab-pane-item .views-field-title {
   color: #b1a895;
 }
+body.language_section .view.view-contacts .view-content .views-bootstrap-tab-plugin-style .tab-content .tab-pane .tab-pane-item .views-field-title {
+  color: #d82a33;
+}
 /*
  *  View courses component
  * --------------------------------------------------*/
@@ -14753,6 +14871,9 @@ body.kscollege_section .view.view-courses .view-content .panel-group .main-title
 }
 body.excollege_section .view.view-courses .view-content .panel-group .main-title h1 {
   color: #b1a895;
+}
+body.language_section .view.view-courses .view-content .panel-group .main-title h1 {
+  color: #d82a33;
 }
 .view.view-courses .view-content .panel-group .course-subject h2 {
   margin: 15px 0 0;
@@ -14844,6 +14965,9 @@ body.kscollege_section .view.view-courses .view-content .panel-group .panel .pan
 body.excollege_section .view.view-courses .view-content .panel-group .panel .panel-heading:hover {
   background-color: #b1a895;
 }
+body.language_section .view.view-courses .view-content .panel-group .panel .panel-heading:hover {
+  background-color: #d82a33;
+}
 .view.view-courses .view-content .panel-group .panel .panel-collapse .panel-body {
   margin: 10px 0;
   padding: 10px 10px 20px;
@@ -14866,6 +14990,10 @@ body.kscollege_section .view.view-courses .view-content .panel-group .panel .pan
 body.excollege_section .view.view-courses .view-content .panel-group .panel .panel-collapse .panel-body {
   border-top: 1px solid #b1a895;
   border-bottom: 1px solid #b1a895;
+}
+body.language_section .view.view-courses .view-content .panel-group .panel .panel-collapse .panel-body {
+  border-top: 1px solid #d82a33;
+  border-bottom: 1px solid #d82a33;
 }
 /*
  *  View Course-tabs component
@@ -15118,6 +15246,12 @@ body.excollege_section .view.view-course-times-search .view-filters .views-expos
 body.excollege_section .view.view-course-times .view-filters .views-exposed-form .views-exposed-widget .views-widget .form-item select:active,
 body.excollege_section .view.view-course-times-search .view-filters .views-exposed-form .views-exposed-widget .views-widget .form-item select:active {
   border: 1px solid #b1a895;
+}
+body.language_section .view.view-course-times .view-filters .views-exposed-form .views-exposed-widget .views-widget .form-item select:focus,
+body.language_section .view.view-course-times-search .view-filters .views-exposed-form .views-exposed-widget .views-widget .form-item select:focus,
+body.language_section .view.view-course-times .view-filters .views-exposed-form .views-exposed-widget .views-widget .form-item select:active,
+body.language_section .view.view-course-times-search .view-filters .views-exposed-form .views-exposed-widget .views-widget .form-item select:active {
+  border: 1px solid #d82a33;
 }
 .view.view-course-times .view-content,
 .view.view-course-times-search .view-content {
@@ -15978,6 +16112,9 @@ body.kscollege_section.page-taxonomy-term-3 .main-container .container .row sect
 }
 body.excollege_section .main-container .container .row section h1.page-header {
   color: #b1a895;
+}
+body.language_section .main-container .container .row section h1.page-header {
+  color: #d82a33;
 }
 .main-container .container .row section .messages {
   margin-top: 20px;
