@@ -10,13 +10,6 @@
     }
     Drupal.current_course_key = false;
 
-    $('.witercho_breadcrumb a:first').on('click', function() {
-      $(this).nextAll().remove();
-      Drupal.current_course_key = false;
-      //$('.view.view-segment-selector').css({visibility: 'visible'});
-      $('#bildungsnavigator_witercho_details').hide();
-    });
-
     $('#bildungsnavigator_witercho').on('click', function() {
       $(this).hide();
     });
@@ -31,6 +24,14 @@
       return false;
     });
 
+    $('.witercho_breadcrumb a:first').on('click', function() {
+      // NOT USED ANYMORE
+      $(this).nextAll().remove();
+      Drupal.current_course_key = false;
+      //$('.view.view-segment-selector').css({visibility: 'visible'});
+      $('#bildungsnavigator_witercho_details').hide();
+    });
+
     $('#bildungsnavigator_wrapper img').mapster({
       mapKey: 'data-key',
       mapScale: true,
@@ -41,10 +42,13 @@
       }],
       isSelectable: false,
       onConfigured: function() {
+        // this: mapster bound image
         $(window).resize(fnResize);
         fnResize();
       },
       onClick: function(data) {
+        //this = area element clicked
+        //data = {e: jQuery eventObject, listTarget: $(item) from boundList, key: mapKey for this area,  selected: true | false};
         if (Drupal.bildungsnavigator_items[data.key]) {
           // reset selected bildungsweg, if any and hide tooltip
           $('#map_tooltip').hide();
@@ -72,6 +76,11 @@
       },
       toolTipContainer: '<div id="map_tooltip" style="border: 1px solid #f3f3f2; margin: 4px;"></div>',
       onShowToolTip: function(data) {
+        // this = area element bound to the tooltip
+        // data = { toolTip: jQuery object of the tooltip container,
+        //          areaOptions: { area_options },
+        //          key: map key for this area,
+        //          selected: true | false - current state of the area};
         var r_w = $('#bildungsnavigator_wrapper img').width();
         var _coords = $(this).attr('coords').split(',');
         for (var i = 0; i < _coords.length; i++) {
@@ -98,7 +107,7 @@
       });
     });
 
-    var _segments = ['segment_1', 'segment_2', 'segment_3', 'segment_4'];
+    var _segments = ['segment_1', 'segment_2', 'segment_3', 'segment_4', 'segment_107'];
     var _current_segment = $.inArray(location.hash.substr(1), _segments) ? location.hash.substr(1) : 'all';
 
     $('.view-segment-selector .views-row a').on('click', function() {
