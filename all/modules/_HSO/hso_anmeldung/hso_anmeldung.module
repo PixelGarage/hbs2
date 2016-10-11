@@ -19,6 +19,11 @@ define('ANMELDUNG_DEFAULT', 264);
 define('ANMELDUNG_ECDL', 476);
 
 /**
+ * TELC Anmeldungs form.
+ */
+define('ANMELDUNG_TELC', 15686);
+
+/**
  * European Anmeldungs form.
  */
 define('ANMELDUNG_EURO', 475);
@@ -37,6 +42,11 @@ define('BILDUNGSBERATUNG_FORM', 1335); // HSO: 1335
  * Broschüre bestellen form.
  */
 define('BROSCHUERE_BESTELLEN_FORM', 1336); // HSO: 1336
+
+/**
+ * Broschure download form.
+ */
+define('BROSCHURE_DOWNLOAD_FORM', 12649); //
 
 /**
  * AGB nid.
@@ -79,6 +89,19 @@ function hso_anmeldung_menu()
     'page callback' => '_hso_get_courses_callback',
     'page arguments' => array(1, 2),
     'type' => MENU_CALLBACK,
+  );
+  // admin form prices
+  $items['admin/config/system/flexible_prices'] = array(
+    'title' => t('Exam prices'),
+    'type' => MENU_NORMAL_ITEM,
+    'description' => t('Configure the flexible exam prices for TELC and ECDL.'),
+    'access callback' => 'user_access',
+    'access arguments' => array('administer site configuration'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('hso_anmeldung_prices_form'),
+    'file' => 'hso_anmeldung.admin.inc',
+    'file path' => drupal_get_path('module', 'hso_anmeldung'),
+    'weight' => -10,
   );
   return $items;
 }
@@ -336,7 +359,28 @@ function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $c
     if (array_key_exists($key, $submission)) {
       if (!empty($data['extra']['hso_anmeldung_is_additional'])) {
         $additional_fields[] = sprintf('%-26s', $data['name'] . ':') . $submission[$key][0] . '\par';
-      } else {
+      }
+      else if (($template == 'telcb1' || $template == 'telcb2') && $data['form_key'] == 'prufungsart') {
+        //
+        // TELC B1/B2 Anmeldung
+        switch ($submission[$key][0]) {
+          case 'mundlich':
+            $to_search['%' . strtoupper($data['form_key']) . '%'] = t('mündliche Prüfung');
+            $to_search['%TELC_PRICE%'] = ($template == 'telcb1') ? variable_get('hso_anmeldung_oral_exam_telcb1', 0) : variable_get('hso_anmeldung_oral_exam_telcb2', 0);
+            break;
+          case 'schriftlich':
+            $to_search['%' . strtoupper($data['form_key']) . '%'] = t('schriftliche Prüfung');
+            $to_search['%TELC_PRICE%'] = ($template == 'telcb1') ? variable_get('hso_anmeldung_written_exam_telcb1', 0) : variable_get('hso_anmeldung_written_exam_telcb2', 0);
+            break;
+          case 'beides':
+            $to_search['%' . strtoupper($data['form_key']) . '%'] = t('mündliche und schriftliche Prüfung');
+            $to_search['%TELC_PRICE%'] = ($template == 'telcb1') ? variable_get('hso_anmeldung_both_exam_telcb1', 0) : variable_get('hso_anmeldung_both_exam_telcb2', 0);
+            break;
+        }
+        // use one template for both
+        $template = 'telc';
+      }
+      else {
         $to_search['%' . strtoupper($data['form_key']) . '%'] = $submission[$key][0];
       }
       if ($template == 'ecdl' && preg_match('/^m(\d+)$/', $data['form_key']) && $submission[$key][0]) {
@@ -526,7 +570,7 @@ function &hso_anmeldung_session_data()
  */
 function hso_anmeldung_form_alter(&$form, &$form_state, $form_id)
 {
-  if ($form_id == 'webform_client_form_12649') {
+  if ($form_id == 'webform_client_form_' . BROSCHURE_DOWNLOAD_FORM) {
     // add course id to download leaflet form
     if (arg(0) == 'node' && is_numeric(arg(1))) {
       $session_data = &hso_anmeldung_session_data();
@@ -539,8 +583,11 @@ function hso_anmeldung_form_alter(&$form, &$form_state, $form_id)
       }
     }
 
-  } else if ($form_id == 'webform_client_form_264' || $form_id == 'webform_client_form_475' || $form_id == 'webform_client_form_476') {
-    // extend all anmeldungs-forms (default, european, ecdl),
+  } else if ($form_id == 'webform_client_form_' . ANMELDUNG_DEFAULT ||
+      $form_id == 'webform_client_form_' . ANMELDUNG_ECDL ||
+      $form_id == 'webform_client_form_' . ANMELDUNG_TELC ||
+      $form_id == 'webform_client_form_'. ANMELDUNG_EURO) {
+    // extend all anmeldungs-forms (default, european, ecdl, telc),
     // but only if they are shown (url = node/nid/anmeldung)
     if (arg(0) == 'node' && is_numeric(arg(1)) && arg(2) == 'anmeldung') {
       // Anmeldung called from course time
@@ -562,29 +609,68 @@ function hso_anmeldung_form_alter(&$form, &$form_state, $form_id)
     $agb_nid = AGB_NID;
     $text = '';
 
-    // get AGB nid
+    // get AGB nid from segment
     if ($segment && !empty($segment->field_agb_nid)) {
       $agb_nid = $segment->field_agb_nid[LANGUAGE_NONE][0]['value'];
     }
 
     // add Anmeldungs conditions
     if ($form_id == 'webform_client_form_' . ANMELDUNG_ECDL) {
-      // ecdl form
-      $text = 'Ich habe die ' . l('Allgemeinen Geschäftsbedingungen (AGB)', 'node/' . $agb_nid, array('html' => TRUE, 'attributes' => array('target' => '_blank'))) .
-        ' gelesen und bin mir &#252;ber die Kosten von <strong id="agb_costs">CHF 0.--</strong> bewusst, ' .
-        'welche mir auch bei Nicht-Erscheinen zum Pr&#252;fungstermin verrechnet werden.';
+      // ecdl forms
+      // add agb text
+      $text = '* <strong>Ich habe die ' . l('Allgemeinen Geschäftsbedingungen (AGB)', 'node/' . $agb_nid, array('html' => TRUE, 'attributes' => array('target' => '_blank'))) .
+        ' gelesen und bin mir &#252;ber die Kosten von <strong class="agb_costs">CHF 0.--</strong> bewusst, ' .
+        'welche mir auch bei Nicht-Erscheinen zum Pr&#252;fungstermin verrechnet werden.</strong><br />';
+
+    }
+    else if ($form_id == 'webform_client_form_' . ANMELDUNG_TELC) {
+      // telc forms
+      // add agb text
+      $text = '* <strong>Ich habe die ' . l('Allgemeinen Geschäftsbedingungen (AGB)', 'node/' . $agb_nid, array('html' => TRUE, 'attributes' => array('target' => '_blank'))) .
+        ' gelesen und bin mir &#252;ber die Kosten von <strong class="telc_costs">CHF 0.--</strong> bewusst, ' .
+        'welche mir auch bei Nicht-Erscheinen zum Pr&#252;fungstermin verrechnet werden.</strong><br />';
+
+      // attach js settings with corresponding prices
+      $template = $course_time_node->field_template[LANGUAGE_NONE][0]['value'];
+      if ($template == 'telcb1') {
+        // telc b1 prices
+        $js_settings = array(
+          'telc_costs' => array(
+            'muendlich' => variable_get('hso_anmeldung_oral_exam_telcb1', 0),
+            'schriftlich' => variable_get('hso_anmeldung_written_exam_telcb1', 0),
+            'beides' => variable_get('hso_anmeldung_both_exam_telcb1', 0)
+          )
+        );
+      }
+      else {
+        // telc b2 prices
+        $js_settings = array(
+          'telc_costs' => array(
+            'muendlich' => variable_get('hso_anmeldung_oral_exam_telcb2', 0),
+            'schriftlich' => variable_get('hso_anmeldung_written_exam_telcb2', 0),
+            'beides' => variable_get('hso_anmeldung_both_exam_telcb2', 0)
+          )
+        );
+      }
+      $form['#attached']['js'][] = array(
+        'data' => array('hso_anmeldung' => $js_settings),
+        'type' => 'setting'
+      );
 
     } else {
-      // default & european form
+        // default & european form
       if (empty($course_time_node->field_detailed_price) || empty($course_time_node->field_detailed_price[LANGUAGE_NONE][0]['value'])) {
         $form['submitted']['agbcheck']['#access'] = FALSE;
 
       } else {
+        // add markup
         $text = $course_time_node->field_detailed_price[LANGUAGE_NONE][0]['value'];
         if (!empty($course_time_node->field_additional_info_price) && !empty($course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'])) {
           $text .= $course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'];
         }
         $form['submitted']['markup']['#markup'] = $text;
+
+        // add agb text
         $text = '* <strong>Ich habe die ' .
           l('Allgemeinen Geschäftsbedingungen sowie die Preisliste (AGB / Preislisten)', 'node/' . $agb_nid, array('html' => TRUE, 'attributes' => array('target' => '_blank'))) .
           ' gelesen und bin damit einverstanden.</strong><br />';
@@ -592,6 +678,8 @@ function hso_anmeldung_form_alter(&$form, &$form_state, $form_id)
 
     }
     $form['submitted']['agbcheck']['#options'][1] = $text;
+
+    // check visibility of form fields(see HSO extra fields)
     _hso_anmeldung_check_form_fields($form['submitted'], $course);
   }
 }
