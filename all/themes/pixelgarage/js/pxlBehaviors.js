@@ -187,17 +187,27 @@
   Drupal.behaviors.telc_anmeldung = {
     attach: function (context) {
       var $telc_form = $('#webform-client-form-15686'),
-          $radios = $telc_form.find('.webform-component--prufungsart input[type="radio"]'),
+          $radios_level = $telc_form.find('.webform-component--zertifikat-b--level-b input[type="radio"]')
+                                    .add('.webform-component--zertifikat-a--level-a input[type="radio"]'),
+          $radios_type = $telc_form.find('.webform-component--zertifikat-b--pruefungsart input[type="radio"]'),
           checkCount = function () {
-            var $radio = $telc_form.find('.webform-component--prufungsart input[type="radio"]:checked'),
+            var $level = $telc_form.find('.webform-component--zertifikat-b--level-b input[type="radio"]:checked')
+                                    .add('.webform-component--zertifikat-a--level-a input[type="radio"]:checked'),
+                $type = $telc_form.find('.webform-component--zertifikat-b--pruefungsart input[type="radio"]:checked'),
               price =  0;
 
             // find price for checked radio, if any
-            if ($radio.size() > 0) {
+            if ($level.length > 0) {
               var costs = Drupal.settings.hso_anmeldung.telc_costs,
-                checked_value = $radio.attr('value');
+                level = $level.attr('value');
 
-              price = costs[checked_value];
+              if (level === 'a1' || level === 'a2') {
+                price = costs[level];
+              } else if ($type.length > 0) {
+                var type = $type.attr('value');
+
+                price = costs[type + '_' + level];
+              }
             }
 
             // set corresponding price in agb label
@@ -205,7 +215,10 @@
           };
 
       // add click events to radios
-      $radios.once('radio-click', function() {
+      $radios_level.once('radio-level-click', function() {
+        $(this).on('click', checkCount);
+      });
+      $radios_type.once('radio-type-click', function() {
         $(this).on('click', checkCount);
       });
 

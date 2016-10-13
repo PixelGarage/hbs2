@@ -343,6 +343,8 @@ function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $c
   $to_search = array();
   $additional_fields = array();
   $mod_count = 0;
+  $level = $level_b = '';
+  $type = '';
 
   // loop through all webform fields and get submitted values
   foreach ($webform_components as $key => $data) {
@@ -353,6 +355,7 @@ function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $c
         (!empty($conditional_courses) && !empty($course->field_internal_id) && !in_array($course->field_internal_id[LANGUAGE_NONE][0]['value'], $conditional_courses)) ||
         (!empty($exclude_conditional_courses) && !empty($course->field_internal_id) && in_array($course->field_internal_id[LANGUAGE_NONE][0]['value'], $exclude_conditional_courses))
       ) {
+        // do not show this field (not included or explicitly excluded)
         continue;
       }
     }
@@ -360,25 +363,38 @@ function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $c
       if (!empty($data['extra']['hso_anmeldung_is_additional'])) {
         $additional_fields[] = sprintf('%-26s', $data['name'] . ':') . $submission[$key][0] . '\par';
       }
-      else if (($template == 'telcb1' || $template == 'telcb2') && $data['form_key'] == 'prufungsart') {
+      else if ($template == 'telc' && in_array($data['form_key'], array('level_a', 'level_b'))) {
+        $level = $submission[$key][0];
+        if ($level == 'a1') {
+          $to_search['%TELC_PRICE%'] = variable_get('hso_anmeldung_telca1', 0);
+          $to_search['%TELC_LEVEL%'] = strtoupper($level);
+        }
+        else if ($level == 'a2') {
+          $to_search['%TELC_PRICE%'] = variable_get('hso_anmeldung_telca2', 0);
+          $to_search['%TELC_LEVEL%'] = strtoupper($level);
+        }
+        else {
+          $level_b = $level; // save b-level to be set after components loop
+        }
+        $to_search['%PRUEFUNGSART%'] = '';
+      }
+      else if ($template == 'telc' && $data['form_key'] == 'pruefungsart') {
         //
-        // TELC B1/B2 Anmeldung
+        // TELC Anmeldung
         switch ($submission[$key][0]) {
-          case 'mundlich':
+          case 'muendlich':
             $to_search['%' . strtoupper($data['form_key']) . '%'] = t('mündliche Prüfung');
-            $to_search['%TELC_PRICE%'] = ($template == 'telcb1') ? variable_get('hso_anmeldung_oral_exam_telcb1', 0) : variable_get('hso_anmeldung_oral_exam_telcb2', 0);
+            $type = 'hso_anmeldung_oral_exam_telc';
             break;
           case 'schriftlich':
             $to_search['%' . strtoupper($data['form_key']) . '%'] = t('schriftliche Prüfung');
-            $to_search['%TELC_PRICE%'] = ($template == 'telcb1') ? variable_get('hso_anmeldung_written_exam_telcb1', 0) : variable_get('hso_anmeldung_written_exam_telcb2', 0);
+            $type = 'hso_anmeldung_written_exam_telc';
             break;
           case 'beides':
             $to_search['%' . strtoupper($data['form_key']) . '%'] = t('mündliche und schriftliche Prüfung');
-            $to_search['%TELC_PRICE%'] = ($template == 'telcb1') ? variable_get('hso_anmeldung_both_exam_telcb1', 0) : variable_get('hso_anmeldung_both_exam_telcb2', 0);
+            $type = 'hso_anmeldung_both_exam_telc';
             break;
         }
-        // use one template for both
-        $template = 'telc';
       }
       else {
         $to_search['%' . strtoupper($data['form_key']) . '%'] = $submission[$key][0];
@@ -395,6 +411,12 @@ function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $c
     $to_search['%NOFMODULE%'] = $mod_count;
     $to_search['%KOSTEN%'] = $mod_count * 65;
   }
+  else if ($type != '') {
+    // only for B-levels
+    $to_search['%TELC_LEVEL%'] = strtoupper($level_b);
+    $to_search['%TELC_PRICE%'] = variable_get($type . $level_b, 0);
+  }
+
   $course_time_description = !empty($course_time_node->body) ? strip_tags($course_time_node->body[LANGUAGE_NONE][0]['value']) : '';
   $to_search['%ADDITIONALFIELDS%'] = implode(PHP_EOL, $additional_fields);
   $to_search['%LEHRGANG%'] = $course->title . (empty($course_time_description) ? '' : ', ' . $course_time_description);
@@ -421,7 +443,6 @@ function _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $c
   $to_search['%COSTS%'] = 'CHF ' . $course_time_node->field_brutto_price[LANGUAGE_NONE][0]['value'];
   $to_search['%GRUSSFORMEL%'] = $grussformel;
   // detail costs
-  //$detail_costs = '<strong>Ich bin mir &#252;ber folgende Kosten bewusst:</strong><br />';
   $detail_costs = $course_time_node->field_detailed_price[LANGUAGE_NONE][0]['value'];
   if (!empty($course_time_node->field_additional_info_price) && !empty($course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'])) {
     $detail_costs .= '<br />' . $course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'];
@@ -630,28 +651,19 @@ function hso_anmeldung_form_alter(&$form, &$form_state, $form_id)
         ' gelesen und bin mir &#252;ber die Kosten von <strong class="telc_costs">CHF 0.--</strong> bewusst, ' .
         'welche mir auch bei Nicht-Erscheinen zum Pr&#252;fungstermin verrechnet werden.</strong><br />';
 
-      // attach js settings with corresponding prices
-      $template = $course_time_node->field_template[LANGUAGE_NONE][0]['value'];
-      if ($template == 'telcb1') {
-        // telc b1 prices
-        $js_settings = array(
-          'telc_costs' => array(
-            'muendlich' => variable_get('hso_anmeldung_oral_exam_telcb1', 0),
-            'schriftlich' => variable_get('hso_anmeldung_written_exam_telcb1', 0),
-            'beides' => variable_get('hso_anmeldung_both_exam_telcb1', 0)
-          )
-        );
-      }
-      else {
-        // telc b2 prices
-        $js_settings = array(
-          'telc_costs' => array(
-            'muendlich' => variable_get('hso_anmeldung_oral_exam_telcb2', 0),
-            'schriftlich' => variable_get('hso_anmeldung_written_exam_telcb2', 0),
-            'beides' => variable_get('hso_anmeldung_both_exam_telcb2', 0)
-          )
-        );
-      }
+      // make all TELC prices available in javascript
+      $js_settings = array(
+        'telc_costs' => array(
+          'a1' => variable_get('hso_anmeldung_telca1', 0),
+          'a2' => variable_get('hso_anmeldung_telca2', 0),
+          'muendlich_b1' => variable_get('hso_anmeldung_oral_exam_telcb1', 0),
+          'schriftlich_b1' => variable_get('hso_anmeldung_written_exam_telcb1', 0),
+          'beides_b1' => variable_get('hso_anmeldung_both_exam_telcb1', 0),
+          'muendlich_b2' => variable_get('hso_anmeldung_oral_exam_telcb2', 0),
+          'schriftlich_b2' => variable_get('hso_anmeldung_written_exam_telcb2', 0),
+          'beides_b2' => variable_get('hso_anmeldung_both_exam_telcb2', 0)
+        )
+      );
       $form['#attached']['js'][] = array(
         'data' => array('hso_anmeldung' => $js_settings),
         'type' => 'setting'
@@ -724,8 +736,8 @@ function hso_anmeldung_webform_submission_render_alter(&$renderable)
 {
   $submission = $renderable['#submission'];
 
-  // only anmeldungs forms (default, european, ecdl)
-  if (in_array($submission->nid, array(ANMELDUNG_DEFAULT, ANMELDUNG_ECDL, ANMELDUNG_EURO))) {
+  // only anmeldungs forms (default, european, ecdl, telc)
+  if (in_array($submission->nid, array(ANMELDUNG_DEFAULT, ANMELDUNG_ECDL, ANMELDUNG_TELC, ANMELDUNG_EURO))) {
     // get course time nid from form, if any
     $course_time_nid = FALSE;
     $webform_components = $renderable['#node']->webform['components'];
@@ -749,6 +761,7 @@ function hso_anmeldung_webform_submission_render_alter(&$renderable)
               (!empty($conditional_courses) && !empty($course->field_internal_id) && !in_array($course->field_internal_id[LANGUAGE_NONE][0]['value'], $conditional_courses)) ||
               (!empty($exclude_conditional_courses) && !empty($course->field_internal_id) && in_array($course->field_internal_id[LANGUAGE_NONE][0]['value'], $exclude_conditional_courses))
             ) {
+              // do not render this component (not included or explicitly excluded for course)
               if (!empty($data['pid'])) {
                 unset($renderable[$webform_components[$data['pid']]['form_key']][$data['form_key']]);
               } else {
@@ -764,7 +777,7 @@ function hso_anmeldung_webform_submission_render_alter(&$renderable)
 
 
 /* --------------------------------------------------
- * Webform admin form alteration
+ * Webform email form alteration
  * --------------------------------------------------*/
 
 /**
@@ -791,14 +804,23 @@ function hso_anmeldung_form_webform_email_edit_form_submit($form, $form_state)
   variable_set('webform_template_' . $webform_nid . '_' . $form_state['values']['eid'], $form_state['values']['template_option']);
 }
 
+
+/* --------------------------------------------------
+ * Webform component form alteration
+ * --------------------------------------------------*/
+
 /**
  * Implements hook_form_FORM_ID_alter().
  * Extends the webform component form with HSO extra fields.
  */
 function hso_anmeldung_form_webform_component_edit_form_alter(&$form, &$form_state)
 {
-  if ($form['nid']['#value'] == ANMELDUNG_DEFAULT || $form['nid']['#value'] == ANMELDUNG_ECDL || $form['nid']['#value'] == ANMELDUNG_EURO) {
+  if ($form['nid']['#value'] == ANMELDUNG_DEFAULT || $form['nid']['#value'] == ANMELDUNG_ECDL ||
+      $form['nid']['#value'] == ANMELDUNG_TELC || $form['nid']['#value'] == ANMELDUNG_EURO) {
+    // prepend new submit function
     array_unshift($form['#submit'], 'hso_anmeldung_component_edit_submit');
+
+    // add new HSO fieldset to component form
     $form['hso'] = array(
       '#type' => 'fieldset',
       '#title' => 'HSO Settings',
@@ -827,6 +849,8 @@ function hso_anmeldung_form_webform_component_edit_form_alter(&$form, &$form_sta
       '#title' => 'Include as additional field into PDF',
       '#return_value' => 1,
     );
+
+    // fill default values
     if (!empty($form['cid']['#value'])) {
       $sql = "SELECT extra FROM {webform_component} where nid = :nid and cid = :cid";
       $result = db_query($sql, array(':nid' => $form['nid']['#value'], ':cid' => $form['cid']['#value']));
@@ -841,6 +865,11 @@ function hso_anmeldung_form_webform_component_edit_form_alter(&$form, &$form_sta
   }
 }
 
+/**
+ * Specific component edit form submit handling.
+ * @param $form
+ * @param $form_state
+ */
 function hso_anmeldung_component_edit_submit($form, &$form_state)
 {
   $form_state['values']['extra']['hso_anmeldung_course_ids'] = trim($form_state['values']['hso']['extra']['course_ids']);
