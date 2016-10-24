@@ -504,7 +504,7 @@ function _hso_process_location($location) {
 
   // update all imported fields of node
 	$node->title = $location->brand_short == 'HSO' ? $location->name : $location->brand_short . ' ' . $location->name;
-  $node->field_tab_text[LANGUAGE_NONE][0]['value'] = $location->name;
+  $node->field_tab_text[LANGUAGE_NONE][0]['value'] = $node->title;
   $node->field_internal_id[LANGUAGE_NONE][0]['value'] = $location->id;
 	$node->field_address[LANGUAGE_NONE][0]['country'] = 'CH';
 	$node->field_address[LANGUAGE_NONE][0]['thoroughfare'] = $location->address;
