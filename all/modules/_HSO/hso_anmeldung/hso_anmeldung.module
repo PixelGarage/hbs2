@@ -670,18 +670,16 @@ function hso_anmeldung_form_alter(&$form, &$form_state, $form_id)
       );
 
     } else {
-        // default & european form
-      if (empty($course_time_node->field_detailed_price) || empty($course_time_node->field_detailed_price[LANGUAGE_NONE][0]['value'])) {
-        $form['submitted']['agbcheck']['#access'] = FALSE;
-
-      } else {
-        // add markup
+      // default & european form
+      // add markup
+      $text = '';
+      if (!empty($course_time_node->field_detailed_price) && !empty($course_time_node->field_detailed_price[LANGUAGE_NONE][0]['value'])) {
         $text = $course_time_node->field_detailed_price[LANGUAGE_NONE][0]['value'];
-        if (!empty($course_time_node->field_additional_info_price) && !empty($course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'])) {
-          $text .= $course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'];
-        }
-        $form['submitted']['markup']['#markup'] = $text;
       }
+      if (!empty($course_time_node->field_additional_info_price) && !empty($course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'])) {
+        $text .= $course_time_node->field_additional_info_price[LANGUAGE_NONE][0]['value'];
+      }
+      $form['submitted']['markup']['#markup'] = $text;
 
       // add agb text
       $text = '* <strong>Ich habe die ' .
