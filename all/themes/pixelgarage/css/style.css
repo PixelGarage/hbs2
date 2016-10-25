@@ -15700,6 +15700,13 @@ body.page-bildungsnavigator #bildungsnavigator_main_wrapper #bildungsnavigator_w
 #bildungsnavigator_main_wrapper .course_item.tid_4 a {
   background-color: #b1a895;
 }
+#bildungsnavigator_main_wrapper .course_item.tid_107 {
+  background-color: #F9DCD1;
+  border-top: 7px solid #d82a33;
+}
+#bildungsnavigator_main_wrapper .course_item.tid_107 a {
+  background-color: #d82a33;
+}
 /*
  *  Exposed search block component
  * --------------------------------------------------*/

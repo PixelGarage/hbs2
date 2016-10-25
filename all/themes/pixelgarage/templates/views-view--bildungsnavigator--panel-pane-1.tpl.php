@@ -16,10 +16,19 @@
 			$item->links .= render($link);
 		}
 		$item->segment_id = $n->field_field_segment[0]['raw']['tid'];
-		if (!array_key_exists('segment_' . $item->segment_id, $segments_ids)) $segments_ids['segment_' . $item->segment_id] = array();
-		$segments_ids['segment_' . $item->segment_id][] = $n->field_field_internal_id[0]['raw']['value'];
-		$items[$n->field_field_internal_id[0]['raw']['value']] = $item;
-		$internal_ids[] = $n->field_field_internal_id[0]['raw']['value'];
+    $segment_key = 'segment_' . $item->segment_id;
+    $intl_id = $n->field_field_internal_id[0]['raw']['value'];
+    if ($intl_id) {
+      if (!array_key_exists($segment_key, $segments_ids)) $segments_ids[$segment_key] = array();
+      $segments_ids[$segment_key][] = $intl_id;
+      $items[$intl_id] = $item;
+      $internal_ids[] = $intl_id;
+
+      // language special link to segment
+      if ($intl_id == -50000) {
+        $item->link = url('segments/sprachen');
+      }
+    }
 	}
 ?>
 <script type="text/javascript">
@@ -84,7 +93,7 @@
   <area href="#" shape="rect" alt="" title="MARKOM"   coords="521,321,728,388" data-key="173,all,segment_3" />
   <area href="#" shape="rect" alt="" title="AU"       coords="729,247,832,320" data-key="224,all,segment_3" />
   <area href="#" shape="rect" alt="" title="SVEB"     coords="729,321,832,388" data-key="223,all,segment_3" />
-  <area href="#" shape="rect" alt="" title="SPR"      coords="838,128,940,570" data-key="223,all,segment_107" />
+  <area href="#" shape="rect" alt="" title="SPR"      coords="838,128,940,570" data-key="-50000,all,segment_107" />
   <area href="#" shape="rect" alt="" title="HD-HS"    coords="0,412,235,492"   data-key="208,all,segment_2" />
   <area href="#" shape="rect" alt="" title="BFD"      coords="0,493,235,570"   data-key="44,all,segment_2" />
 	<area href="#" shape="rect" alt="" title="ECDL"     coords="236,412,363,570" data-key="166,all,segment_2" />
