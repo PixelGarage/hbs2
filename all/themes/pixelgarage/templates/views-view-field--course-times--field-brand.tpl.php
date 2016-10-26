@@ -24,14 +24,8 @@
 
   $logo_path = drupal_get_path('theme', 'pixelgarage') . '/images/logo';
   $brand = strtolower($output);
-  switch ($brand) {
-    case 'hso':
-      $logo_path .= '.png';
-      break;
-    default:
-      $logo_path .= '_' . $brand . '.png';
-      break;
-  }
+  $logo_path .= '_' . $brand . '.png';
+
   if (file_exists($logo_path)) {
     $variables = array(
       'path' => $logo_path,
