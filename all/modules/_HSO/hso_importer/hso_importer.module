@@ -273,6 +273,60 @@ function _hso_importer_brand_import($hso_importer, $brand_id, $departments_mappi
  * HSO DB cleanup functions
  * --------------------------------------------------*/
 /**
+ * HBS specific detailed price update for local course-times.
+ */
+function _hbs_brutto_price_to_detailed_field() {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'course_times');
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    // Update existing
+    $nodes = node_load_multiple(array_keys($result['node']));
+    $count_total = 0;
+    $count_updated = 0;
+    foreach ($nodes as $key => $node) {
+      $count_total++;
+      if (empty($node->field_detailed_price) && !empty($node->field_brutto_price)) {
+        $brutto_price = $node->field_brutto_price[LANGUAGE_NONE][0]['value'];
+        $node->field_detailed_price[LANGUAGE_NONE][0]['value'] = "<ul><li>Total Schulgeld f&uuml;r den gesamten Lehrgang: {$brutto_price} CHF.</li></ul>";
+        $node->field_detailed_price[LANGUAGE_NONE][0]['format']  = 'html';
+        node_save($node);
+        $count_updated++;
+      }
+    }
+    $importMessage = '@nCourseTimes course times in total (@updCourseTimes updated).';
+    drupal_set_message(t($importMessage, array('@nCourseTimes' => $count_total, '@updCourseTimes' => $count_updated)));
+    watchdog('HSO Importer', $importMessage, array('@nCourseTimes' => $count_total, '@updCourseTimes' => $count_updated), WATCHDOG_DEBUG);
+  }
+}
+
+function _hbs_transfer_location_in_course_times() {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'course_times')
+    ->fieldCondition('field_location', 'target_id', 14796);
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    // Update existing
+    $nodes = node_load_multiple(array_keys($result['node']));
+    $count_total = 0;
+    $count_updated = 0;
+    foreach ($nodes as $key => $node) {
+      $count_total++;
+      if (empty($node->field_internal_id)) {
+        $node->field_location[LANGUAGE_NONE][0]['target_id'] = 6687;
+        node_save($node);
+        $count_updated++;
+      }
+    }
+    $importMessage = '@nCourseTimes course times in total (@updCourseTimes updated).';
+    drupal_set_message(t($importMessage, array('@nCourseTimes' => $count_total, '@updCourseTimes' => $count_updated)));
+    watchdog('HSO Importer', $importMessage, array('@nCourseTimes' => $count_total, '@updCourseTimes' => $count_updated), WATCHDOG_DEBUG);
+  }
+}
+
+/**
  * Creates the segment mappings array.
  */
 function _hso_departments_mapping() {
