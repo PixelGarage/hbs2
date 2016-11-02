@@ -97,7 +97,7 @@
   <area href="#" shape="rect" alt="" title="HD-HS"    coords="0,412,235,492"   data-key="208,all,segment_2" />
   <area href="#" shape="rect" alt="" title="BFD"      coords="0,493,235,570"   data-key="44,all,segment_2" />
 	<area href="#" shape="rect" alt="" title="ECDL"     coords="236,412,363,570" data-key="166,all,segment_2" />
-	<area href="#" shape="rect" alt="" title="LU"       coords="365,412,469,570" data-key="172,all,segment_2" />
+	<area href="#" shape="rect" alt="" title="LU"       coords="365,412,469,570" data-key="-100000,all,segment_2" />
   <area href="#" shape="rect" alt="" title="KV"       coords="470,412,832,464" data-key="142,all,segment_1" />
   <area href="#" shape="rect" alt="" title="HD-KV"    coords="470,465,832,517" data-key="147,all,segment_1" />
   <area href="#" shape="rect" alt="" title="BFD-KV"   coords="470,518,832,570" data-key="146,all,segment_1" />
