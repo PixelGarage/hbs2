@@ -55,23 +55,22 @@ if ($course_time_nid) {
 <div class="webform-confirmation">
   <p>Besten Dank für Ihre Prüfungs-Anmeldung.<p>
   <ul>
-    <li>Die <a target="_blank" href="<?php print $pdf_link; ?>">Reservationsbestätigung (PDF)</a> können Sie nun herunterladen</li>
-    <li>Per E-Mail erhalten Sie dieselbe Reservationsbestätigung in einigen Minuten zugestellt</li>
+    <li>Die <a target="_blank" href="<?php print $pdf_link; ?>">Anmeldebestätigung (PDF)</a> können Sie nun herunterladen</li>
+    <li>Per E-Mail erhalten Sie dieselbe Anmeldebestätigung in einigen Minuten zugestellt</li>
   </ul>
-  <h2>Anmeldenummer</h2>
-  <p>Und dies ist Ihre Anmeldenummer: <b><?php echo str_pad($sid, 6, '0', STR_PAD_LEFT); ?></b><br />
-	  Halten Sie diese bei Anfragen jeweils bereit.</p>
 
   <h2>Weiteres Vorgehen</h2>
-  <p>Wir bitten Sie, spätestens 2 Tage vor der Prüfung vorbeizukommen und beim HSO Sekretariat für jedes 
+  <p>Wir bitten Sie, spätestens 2 Tage vor der Prüfung vorbeizukommen und beim H.B.S. Sekretariat für jedes
   	angemeldete Modul einen "Prüfungsgutschein TELC" zu lösen und auszufüllen. Dieser Gutschein ist Ihr
   	Eintritts-Ticket für die Prüfung.</p>
+  <p>Die Pr&uuml;fung kann nur durchef&uuml;hrt werden, wenn sich daf&uuml;r gen&uuml;gend Interessent/-innen finden.
+  Falls die Pr&uuml;fung nicht durchgef&uuml;hrt werden kann, verst&auml;ndigen wir Sie nach dem Anmeldeschluss.</p>
 
   <h2>Rückgängig machen</h2>
   <p>Wollen Sie Ihre Anmeldung rückgängig machen, nehmen Sie bitte telefonisch mit uns
   	Kontakt auf.</p>
 
-  <p><a href="<?php print url('node/' . $course->nid); ?>">Zurück zur Übersicht der Sprachschule</a></p>
+  <p><a href="<?php print url('node/' . $course->nid); ?>">Zurück zur Sprachschule</a></p>
 </div>
 
 <?php if ($course_time_nid): ?>

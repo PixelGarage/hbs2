@@ -49,7 +49,7 @@
       <h2 class="title"></h2>
       <p class="description"></p>
       <div class="links">
-        <a class="witercho_link" href="javascript:void(0);">Witercho</a>
+        <a class="witercho_link" href="javascript:void(0);">Aufstieg</a>
         <a class="details_link" href="javascript:void(0);">Details</a>
       </div>
     </div>
