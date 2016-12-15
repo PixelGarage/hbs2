@@ -183,6 +183,10 @@ function pixelgarage_preprocess_views_exposed_form(&$vars) {
  * in the masonry.
  */
 function pixelgarage_preprocess_views_view_proximity (&$vars) {
+  $view = $vars['view'];
+  if ($view->name != 'social_masonry') return;
+
+  // add testimonials for the social masonry
   $vars['testimonials'] = _random_testimonials();
 }
 
