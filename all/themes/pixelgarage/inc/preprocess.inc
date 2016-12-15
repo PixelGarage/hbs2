@@ -104,28 +104,26 @@ function pixelgarage_preprocess_page(&$vars) {
   // set segment logo
   $contexts = context_active_contexts();
   if (array_key_exists('kv-college', $contexts) || array_key_exists('kv-college-home', $contexts)) {
-    $vars['logo'] = str_replace('logo.png', 'kv_logo.png', $vars['logo']);
+    $vars['logo'] = str_replace('logo.png', 'kv_logo.svg', $vars['logo']);
   }
   if (array_key_exists('hs-college', $contexts) || array_key_exists('hs-college-home', $contexts)) {
-    $vars['logo'] = str_replace('logo.png', 'hs_logo.png', $vars['logo']);
+    $vars['logo'] = str_replace('logo.png', 'hs_logo.svg', $vars['logo']);
   }
   if (array_key_exists('ks-college', $contexts) || array_key_exists('ks-college-home', $contexts)) {
-    $vars['logo'] = str_replace('logo.png', 'ks_logo.png', $vars['logo']);
+    $vars['logo'] = str_replace('logo.png', 'ks_logo.svg', $vars['logo']);
   }
   if (array_key_exists('hf-college', $contexts) || array_key_exists('hf-college-home', $contexts)) {
-    $vars['logo'] = str_replace('logo.png', 'ks_logo.png', $vars['logo']);
+    $vars['logo'] = str_replace('logo.png', 'hf_logo.png', $vars['logo']);
   }
   if (array_key_exists('fh-college', $contexts) || array_key_exists('fh-college-home', $contexts)) {
-    $vars['logo'] = str_replace('logo.png', 'ks_logo.png', $vars['logo']);
+    $vars['logo'] = str_replace('logo.png', 'hfh_logo.svg', $vars['logo']);
   }
   if (array_key_exists('ex-college', $contexts) || array_key_exists('ex-college-home', $contexts)) {
-    $vars['logo'] = str_replace('logo.png', 'ex_logo.png', $vars['logo']);
-  }
-  if (array_key_exists('sprachen', $contexts) || array_key_exists('sprachen-home', $contexts)) {
-        $vars['logo'] = str_replace('logo.png', 'la_logo.png', $vars['logo']);
+    $vars['logo'] = str_replace('logo.png', 'ex_logo.svg', $vars['logo']);
   }
   // replace logo with .svg
-  $vars['logo'] = str_replace(array('.jpg', '.png'), '.svg', $vars['logo']);
+  //$vars['logo'] = str_replace(array('.jpg', '.png'), '.svg', $vars['logo']);
+
 
   //
   // get exposed search form, if available (to render it in modal dialog)
@@ -247,11 +245,17 @@ function pixelgarage_preprocess_views_bootstrap_accordion_plugin_style(&$vars) {
 
       // add main titles
       if ($course_subject == 'Management und Organisation') {
-        $vars['course_subject_titles'][$key] = 'Berufsakademie';
+        $vars['course_subject_titles'][$key] = t('Kaderschule');
+        $vars['course_subject_description'][$key] = '';
       } else if ($course_subject == 'Diplomstudium HF') {
-        $vars['course_subject_titles'][$key] = 'Höhere Fachschule für Wirtschaft';
+        $vars['course_subject_titles'][$key] = t('Höhere Fachschule für Wirtschaft');
+        $vars['course_subject_description'][$key] = '';
+      } else if ($course_subject == 'Bachelor-Studium') {
+        $vars['course_subject_titles'][$key] = t('Fachhochschule HFH');
+        $vars['course_subject_description'][$key] = t('HFH ist ein bekannter Abschluss');
       } else {
         $vars['course_subject_titles'][$key] = '';
+        $vars['course_subject_description'][$key] = '';
       }
 
     } else {
