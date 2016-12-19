@@ -12760,6 +12760,13 @@ body.language_section .node.node-course .row .col-sm-12 .field-name-body a:focus
 .node.node-news.view-mode-teaser .row div.col-sm-12 {
   width: 100%;
 }
+.node.node-news.view-mode-teaser .row div.col-sm-12 a {
+  color: #494a4f;
+}
+.node.node-news.view-mode-teaser .row div.col-sm-12 a:hover,
+.node.node-news.view-mode-teaser .row div.col-sm-12 a:focus {
+  color: #494a4f;
+}
 .node.node-news.view-mode-teaser .row div.col-sm-12 .field-name-field-picture {
   margin: -20px -20px 20px;
 }
@@ -12948,6 +12955,13 @@ body.language_section .node.node-course .row .col-sm-12 .field-name-body a:focus
   max-width: 100%;
   height: auto;
   min-height: 350px;
+}
+.node.node-news.view-mode-teaser .row div.col-sm-12 .field-name-body a {
+  color: #494a4f;
+}
+.node.node-news.view-mode-teaser .row div.col-sm-12 .field-name-body a:hover,
+.node.node-news.view-mode-teaser .row div.col-sm-12 .field-name-body a:focus {
+  color: #494a4f;
 }
 @media screen and (min-width: 768px) {
 }
@@ -14036,6 +14050,13 @@ body.language_section .node.node-course .row .col-sm-12 .field-name-body a:focus
 .node.node-tweet.view-mode-teaser .row div.col-sm-12 {
   width: 100%;
 }
+.node.node-tweet.view-mode-teaser .row div.col-sm-12 a {
+  color: #494a4f;
+}
+.node.node-tweet.view-mode-teaser .row div.col-sm-12 a:hover,
+.node.node-tweet.view-mode-teaser .row div.col-sm-12 a:focus {
+  color: #494a4f;
+}
 .node.node-tweet.view-mode-teaser .row div.col-sm-12 .field-name-title {
   display: inline-block;
   vertical-align: top;
@@ -14251,6 +14272,13 @@ body.language_section .node.node-course .row .col-sm-12 .field-name-body a:focus
   max-width: 100%;
   height: auto;
   min-height: 350px;
+}
+.node.node-tweet.view-mode-teaser .row div.col-sm-12 .field-name-body a {
+  color: #494a4f;
+}
+.node.node-tweet.view-mode-teaser .row div.col-sm-12 .field-name-body a:hover,
+.node.node-tweet.view-mode-teaser .row div.col-sm-12 .field-name-body a:focus {
+  color: #494a4f;
 }
 @media screen and (min-width: 768px) {
 }
@@ -14495,6 +14523,13 @@ body.language_section .node.node-course .row .col-sm-12 .field-name-body a:focus
 .node.node-facebook-post.view-mode-teaser .row div.col-sm-12 {
   width: 100%;
 }
+.node.node-facebook-post.view-mode-teaser .row div.col-sm-12 a {
+  color: #333333;
+}
+.node.node-facebook-post.view-mode-teaser .row div.col-sm-12 a:hover,
+.node.node-facebook-post.view-mode-teaser .row div.col-sm-12 a:focus {
+  color: #333333;
+}
 .node.node-facebook-post.view-mode-teaser .row div.col-sm-12 .field-name-field-picture {
   margin: -20px -20px 20px;
 }
@@ -14686,6 +14721,13 @@ body.language_section .node.node-course .row .col-sm-12 .field-name-body a:focus
   max-width: 100%;
   height: auto;
   min-height: 350px;
+}
+.node.node-facebook-post.view-mode-teaser .row div.col-sm-12 .field-name-body a {
+  color: #494a4f;
+}
+.node.node-facebook-post.view-mode-teaser .row div.col-sm-12 .field-name-body a:hover,
+.node.node-facebook-post.view-mode-teaser .row div.col-sm-12 .field-name-body a:focus {
+  color: #494a4f;
 }
 @media screen and (min-width: 768px) {
 }
@@ -17098,6 +17140,13 @@ body.page-bildungsnavigator #bildungsnavigator_main_wrapper #bildungsnavigator_w
 }
 #bildungsnavigator_main_wrapper .course_item.tid_107 a {
   background-color: #d82a33;
+}
+#bildungsnavigator_main_wrapper .course_item.tid_null {
+  background-color: #DDDFDE;
+  border-top: 7px solid #B5B8B7;
+}
+#bildungsnavigator_main_wrapper .course_item.tid_null a {
+  background-color: #B5B8B7;
 }
 /*
  *  Social-masonry view component

@@ -21,6 +21,14 @@
     div.col-sm-12 {
       width: 100%;
 
+      a {
+        color: @pxl-color-gray-dark;
+
+        &:hover, &:focus {
+          color: @pxl-color-gray-dark;
+        }
+      }
+
       .field-name-field-picture {
         margin: -20px -20px 20px;
 
@@ -45,6 +53,14 @@
       .field-name-body {
         #pxl-mixins.wysiwyg-body(14px; @font-size-base; 14px);
         color: @pxl-color-gray-dark;
+
+        a {
+          color: @pxl-color-gray-dark;
+
+          &:hover, &:focus {
+            color: @pxl-color-gray-dark;
+          }
+        }
 
         @media @tablet {
           //.content-columns(2);
