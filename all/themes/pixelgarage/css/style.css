@@ -16757,7 +16757,7 @@ body.language_section .view.view-course-times-search .view-filters .views-expose
 }
 .view.view-course-times .view-content table tbody tr td.views-field-field-brand img,
 .view.view-course-times-search .view-content table tbody tr td.views-field-field-brand img {
-  height: 30px;
+  max-height: 30px;
 }
 .view.view-course-times .view-content table tbody tr td.views-field-nothing,
 .view.view-course-times-search .view-content table tbody tr td.views-field-nothing {
