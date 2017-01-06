@@ -60,9 +60,8 @@ if ($course_time_nid) {
   </ul>
 
   <h2>Weiteres Vorgehen</h2>
-  <p>Wir bitten Sie, spätestens 2 Tage vor der Prüfung vorbeizukommen und beim H.B.S. Sekretariat für jedes
-  	angemeldete Modul einen "Prüfungsgutschein TELC" zu lösen und auszufüllen. Dieser Gutschein ist Ihr
-  	Eintritts-Ticket für die Prüfung.</p>
+  <p>Beachten Sie auf der Liste bitte unbedingt die Anmeldeschl&uuml;sse f&uuml;r TELC-Pr&uuml;fungen (jeweils ca. 5 Wochen vor dem jeweiligen Pr&uuml;fungstermin).
+    Falls Sie sich nach dem Anmeldeschluss anmelden wird Ihnen einen Zuschlag von CHF 50.– f&uuml;r die Stufen A1-A2, oder CHF 75.– für die Stufen B1-B2 verrechnet."</p>
   <p>Die Pr&uuml;fung kann nur durchef&uuml;hrt werden, wenn sich daf&uuml;r gen&uuml;gend Interessent/-innen finden.
   Falls die Pr&uuml;fung nicht durchgef&uuml;hrt werden kann, verst&auml;ndigen wir Sie nach dem Anmeldeschluss.</p>
 
