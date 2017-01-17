@@ -4,7 +4,7 @@
       var wrapp = $('#bildungsnavigator_wrapper');
       var w = wrapp.width();
       var o_w = 940;
-      var o_h = 559;
+      var o_h = 573;
       var h = o_h * (w / o_w);
       wrapp.find('img').mapster('resize', w, h,0);
     }
