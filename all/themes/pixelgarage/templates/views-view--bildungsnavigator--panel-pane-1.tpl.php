@@ -75,30 +75,30 @@
 	</div>
 </div>
 <map id="bildungs_map" name="bildungsmap">
-	<area href="#" shape="rect" alt="" title="EMBA"     coords="0,0,960,51"      data-key="40,all,segment_4" />
-	<area href="#" shape="rect" alt="" title="FH"       coords="0,69,105,388"    data-key="182,all,segment_3" />
-	<area href="#" shape="rect" alt="" title="HFW"      coords="106,128,208,240" data-key="176,all,segment_3" />
-  <area href="#" shape="rect" alt="" title="HWD"      coords="106,247,208,388" data-key="162,all,segment_3" />
-	<area href="#" shape="rect" alt="" title="NDS-BWL"  coords="208,128,363,214" data-key="184,all,segment_3" />
-  <area href="#" shape="rect" alt="" title="NDS-MVL"  coords="363,128,520,214" data-key="185,all,segment_3" />
-	<area href="#" shape="rect" alt="" title="ML"       coords="521,128,675,214" data-key="206,all,segment_3" />
-	<area href="#" shape="rect" alt="" title="VL"       coords="676,128,832,214" data-key="207,all,segment_3" />
-  <area href="#" shape="rect" alt="" title="FF"       coords="208,247,312,320" data-key="168,all,segment_3" />
-  <area href="#" shape="rect" alt="" title="LES"      coords="208,321,312,388" data-key="167,all,segment_3" />
-	<area href="#" shape="rect" alt="" title="TK"       coords="313,247,415,388" data-key="164,all,segment_3" />
-  <area href="#" shape="rect" alt="" title="HR"       coords="416,247,520,320" data-key="179,all,segment_3" />
-  <area href="#" shape="rect" alt="" title="SB-HR"    coords="415,321,520,388" data-key="171,all,segment_3" />
-  <area href="#" shape="rect" alt="" title="MF"       coords="521,247,623,320" data-key="174,all,segment_3" />
-  <area href="#" shape="rect" alt="" title="VF"       coords="625,247,728,320" data-key="175,all,segment_3" />
-  <area href="#" shape="rect" alt="" title="MARKOM"   coords="521,321,728,388" data-key="173,all,segment_3" />
-  <area href="#" shape="rect" alt="" title="AU"       coords="729,247,832,320" data-key="224,all,segment_3" />
-  <area href="#" shape="rect" alt="" title="SVEB"     coords="729,321,832,388" data-key="223,all,segment_3" />
+	<area href="#" shape="rect" alt="" title="EMBA"     coords="0,0,960,51"      data-key="-40001,all,segment_4" />
+	<area href="#" shape="rect" alt="" title="FH"       coords="0,69,105,396"    data-key="-30016,all,segment_3" />
+	<area href="#" shape="rect" alt="" title="HFW"      coords="106,127,208,250" data-key="176,all,segment_3" />
+  <area href="#" shape="rect" alt="" title="HWD"      coords="106,246,208,396" data-key="162,all,segment_3" />
+	<area href="#" shape="rect" alt="" title="NDS-BWL"  coords="208,127,363,214" data-key="184,all,segment_3" />
+  <area href="#" shape="rect" alt="" title="NDS-MVL"  coords="363,127,520,214" data-key="-100000,all,segment_3" />
+	<area href="#" shape="rect" alt="" title="ML"       coords="521,127,675,214" data-key="-30013,all,segment_3" />
+	<area href="#" shape="rect" alt="" title="VL"       coords="676,127,832,214" data-key="-30012,all,segment_3" />
+  <area href="#" shape="rect" alt="" title="FF"       coords="208,247,312,320" data-key="-30010,all,segment_3" />
+  <area href="#" shape="rect" alt="" title="LES"      coords="208,321,312,393" data-key="-30009,all,segment_3" />
+	<area href="#" shape="rect" alt="" title="TK"       coords="313,247,415,393" data-key="-30008,all,segment_3" />
+  <area href="#" shape="rect" alt="" title="HR"       coords="416,247,520,320" data-key="-30007,all,segment_3" />
+  <area href="#" shape="rect" alt="" title="SB-HR"    coords="415,321,520,393" data-key="-30006,all,segment_3" />
+  <area href="#" shape="rect" alt="" title="MF"       coords="521,247,623,320" data-key="-30005,all,segment_3" />
+  <area href="#" shape="rect" alt="" title="VF"       coords="625,247,728,320" data-key="-30004,all,segment_3" />
+  <area href="#" shape="rect" alt="" title="MARKOM"   coords="521,321,728,393" data-key="-30003,all,segment_3" />
+  <area href="#" shape="rect" alt="" title="AU"       coords="729,247,832,320" data-key="-30002,all,segment_3" />
+  <area href="#" shape="rect" alt="" title="SVEB"     coords="729,321,832,393" data-key="-30001,all,segment_3" />
   <area href="#" shape="rect" alt="" title="SPR"      coords="838,128,940,570" data-key="-50000,all,segment_107" />
-  <area href="#" shape="rect" alt="" title="HD-HS"    coords="0,412,235,492"   data-key="208,all,segment_2" />
-  <area href="#" shape="rect" alt="" title="BFD"      coords="0,493,235,570"   data-key="44,all,segment_2" />
+  <area href="#" shape="rect" alt="" title="HD-HS"    coords="0,412,235,492"   data-key="-20002,all,segment_2" />
+  <area href="#" shape="rect" alt="" title="BFD"      coords="0,493,235,570"   data-key="-20001,all,segment_2" />
 	<area href="#" shape="rect" alt="" title="ECDL"     coords="236,412,363,570" data-key="166,all,segment_2" />
 	<area href="#" shape="rect" alt="" title="LU"       coords="365,412,469,570" data-key="-100000,all,segment_2" />
-  <area href="#" shape="rect" alt="" title="KV"       coords="470,412,832,464" data-key="142,all,segment_1" />
-  <area href="#" shape="rect" alt="" title="HD-KV"    coords="470,465,832,517" data-key="147,all,segment_1" />
-  <area href="#" shape="rect" alt="" title="BFD-KV"   coords="470,518,832,570" data-key="146,all,segment_1" />
+  <area href="#" shape="rect" alt="" title="KV"       coords="470,412,832,464" data-key="-10003,all,segment_1" />
+  <area href="#" shape="rect" alt="" title="HD-KV"    coords="470,465,832,517" data-key="-10002,all,segment_1" />
+  <area href="#" shape="rect" alt="" title="BFD-KV"   coords="470,518,832,570" data-key="-10001,all,segment_1" />
 </map>
