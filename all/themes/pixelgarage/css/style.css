@@ -16206,15 +16206,6 @@ body.language_section .view.view-courses .view-content .panel-group .main-title 
   color: #333333;
   line-height: 1;
 }
-.view.view-courses .view-content .panel-group .course-subject h2 {
-  margin: 15px 0 0;
-  padding: 20px 0 24px;
-  font-family: 'SohoGothicProMedium', serif;
-  font-size: 18px;
-  color: #333333;
-  line-height: 1;
-  border-top: 1px solid #c9c9c9;
-}
 .view.view-courses .view-content .panel-group .panel {
   margin: 0;
   border: none;
@@ -16233,6 +16224,24 @@ body.language_section .view.view-courses .view-content .panel-group .main-title 
   -webkit-border-radius: 0;
   border-radius: 0;
   background: none;
+}
+.view.view-courses .view-content .panel-group .panel .panel-heading.course-subject {
+  margin: 15px 0 0;
+  padding: 20px 0;
+  border-top: 1px solid #c9c9c9;
+}
+.view.view-courses .view-content .panel-group .panel .panel-heading.course-subject a {
+  padding: 9px 0 11px;
+}
+.view.view-courses .view-content .panel-group .panel .panel-heading.course-subject a .panel-title {
+  width: 100%;
+  font-family: 'SohoGothicProMedium', serif;
+  font-size: 18px;
+  color: #333333;
+  line-height: 1;
+}
+.view.view-courses .view-content .panel-group .panel .panel-heading.course-subject:hover {
+  background-color: #c9c9c9 !important;
 }
 .view.view-courses .view-content .panel-group .panel .panel-heading .panel-title {
   display: inline-block;
@@ -16263,24 +16272,6 @@ body.language_section .view.view-courses .view-content .panel-group .main-title 
 .view.view-courses .view-content .panel-group .panel .panel-heading .short-description .fa {
   color: #fff;
 }
-@media screen and (min-width: 480px) {
-  .view.view-courses .view-content .panel-group .panel .panel-heading .panel-title a,
-  .view.view-courses .view-content .panel-group .panel .panel-heading .short-description a {
-    padding: 9px 10px 10px;
-    font-size: 15px;
-  }
-}
-@media screen and (min-width: 768px) {
-  .view.view-courses .view-content .panel-group .panel .panel-heading .panel-title,
-  .view.view-courses .view-content .panel-group .panel .panel-heading .short-description {
-    display: inline-block;
-  }
-  .view.view-courses .view-content .panel-group .panel .panel-heading .panel-title a,
-  .view.view-courses .view-content .panel-group .panel .panel-heading .short-description a {
-    padding: 7px 10px 9px;
-    font-size: 18px;
-  }
-}
 .view.view-courses .view-content .panel-group .panel .panel-heading:hover .panel-title a {
   color: #fff;
 }
@@ -16304,6 +16295,24 @@ body.excollege_section .view.view-courses .view-content .panel-group .panel .pan
 }
 body.language_section .view.view-courses .view-content .panel-group .panel .panel-heading:hover {
   background-color: #d82a33;
+}
+@media screen and (min-width: 480px) {
+  .view.view-courses .view-content .panel-group .panel .panel-heading .panel-title a,
+  .view.view-courses .view-content .panel-group .panel .panel-heading .short-description a {
+    padding: 9px 10px 10px;
+    font-size: 15px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .view.view-courses .view-content .panel-group .panel .panel-heading .panel-title,
+  .view.view-courses .view-content .panel-group .panel .panel-heading .short-description {
+    display: inline-block;
+  }
+  .view.view-courses .view-content .panel-group .panel .panel-heading .panel-title a,
+  .view.view-courses .view-content .panel-group .panel .panel-heading .short-description a {
+    padding: 7px 10px 9px;
+    font-size: 18px;
+  }
 }
 .view.view-courses .view-content .panel-group .panel .panel-collapse .panel-body {
   margin: 10px 0;

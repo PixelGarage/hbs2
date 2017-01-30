@@ -61,19 +61,6 @@
         line-height: 1;
       }
 
-      .course-subject {
-        // fachgebiet title
-        h2 {
-          margin: 15px 0 0;
-          padding: 20px 0 24px;
-          font-family: @pxl-text-font-medium;
-          font-size: @font-size-base + 2;
-          color: @text-color;
-          line-height: 1;
-          border-top: 1px solid @pxl-border-color;
-        }
-      }
-
       .panel {
         margin: 0;
         border: none;
@@ -88,6 +75,28 @@
           line-height: 1;
           #pxl-mixins.border-radius(0);
           background: none;
+
+          &.course-subject {
+            margin: 15px 0 0;
+            padding: 20px 0;
+            border-top: 1px solid @pxl-border-color;
+
+            a {
+              padding: 9px 0 11px;
+
+              .panel-title {
+                width: 100%;
+                font-family: @pxl-text-font-medium;
+                font-size: @font-size-base + 2;
+                color: @text-color;
+                line-height: 1;
+              }
+            }
+
+            &:hover {
+              background-color: @pxl-border-color !important;
+            }
+          }
 
           .panel-title {
             display: inline-block;
@@ -125,29 +134,6 @@
             }
           }
 
-          @media @narrow {
-            .panel-title,
-            .short-description {
-              a {
-                padding: 9px 10px 10px;
-                font-size: 15px;
-              }
-            }
-
-          }
-
-          @media @tablet {
-            .panel-title,
-            .short-description {
-              display: inline-block;
-
-              a {
-                padding: 7px 10px 9px;
-                font-size: 18px;
-              }
-            }
-          }
-
           &:hover {
             .panel-title {
               a {
@@ -177,6 +163,29 @@
             background-color: @pxl-color-hso-la;
           }
 
+
+          @media @narrow {
+            .panel-title,
+            .short-description {
+              a {
+                padding: 9px 10px 10px;
+                font-size: 15px;
+              }
+            }
+
+          }
+
+          @media @tablet {
+            .panel-title,
+            .short-description {
+              display: inline-block;
+
+              a {
+                padding: 7px 10px 9px;
+                font-size: 18px;
+              }
+            }
+          }
         }
 
         .panel-collapse {
