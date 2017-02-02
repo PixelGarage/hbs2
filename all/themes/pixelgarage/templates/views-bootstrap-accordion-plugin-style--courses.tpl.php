@@ -24,7 +24,7 @@
             <h4 class="panel-title"><?php print $course_subjects[$key] ?></h4>
           </a>
         </div>
-        <div id="collapse-group-<?php print $key ?>" class="panel-collapse collapse <?php if (!$acc_panel_open) print 'in'?>">
+        <div id="collapse-group-<?php print $key ?>" class="panel-collapse collapse <?php if (!$accordion_collapsed) print 'in'?>">
         <?php $acc_panel_open = true ?>
     <?php endif; ?>
 

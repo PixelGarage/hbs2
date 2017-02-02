@@ -219,6 +219,9 @@ function _random_testimonials() {
  */
 function pixelgarage_preprocess_views_bootstrap_accordion_plugin_style(&$vars) {
   $view = &$vars['view'];
+  $segment_id = explode('/', $_GET['q'])[2];
+  $vars['accordion_collapsed'] = $segment_id == 107; // Languages segment always collapsed, all other open
+
   //
   // add some additional variables for the segment courses accordion view
   $title_field = $vars['options']['title_field'];
