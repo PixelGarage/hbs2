@@ -11242,7 +11242,7 @@ body.excollege_section form.webform-client-form a:focus {
   text-decoration: underline;
 }
 body.language_section form.webform-client-form a {
-  color: #b2cc15;
+  color: #B2CCD8;
   text-decoration: none;
 }
 body.language_section form.webform-client-form a:hover,
@@ -11251,7 +11251,7 @@ body.language_section form.webform-client-form a:focus {
   text-decoration: underline;
 }
 body.language_section form.webform-client-form a {
-  color: #b2cc15;
+  color: #B2CCD8;
   text-decoration: none;
 }
 body.language_section form.webform-client-form a:hover,
@@ -11260,7 +11260,7 @@ body.language_section form.webform-client-form a:focus {
   text-decoration: underline;
 }
 body.language_section form.webform-client-form a {
-  color: #b2cc15;
+  color: #B2CCD8;
   text-decoration: none;
 }
 body.language_section form.webform-client-form a:hover,
@@ -11476,9 +11476,9 @@ body.excollege_section form.webform-client-form .webform-component textarea:focu
 }
 body.language_section form.webform-client-form .webform-component input:focus,
 body.language_section form.webform-client-form .webform-component textarea:focus {
-  border: 1px solid #b2cc15;
-  -webkit-box-shadow: inset 0 0 3px #b2cc15;
-  box-shadow: inset 0 0 3px #b2cc15;
+  border: 1px solid #B2CCD8;
+  -webkit-box-shadow: inset 0 0 3px #B2CCD8;
+  box-shadow: inset 0 0 3px #B2CCD8;
 }
 form.webform-client-form .webform-component .form-textarea-wrapper div.grippie {
   display: none;
@@ -11532,7 +11532,7 @@ body.excollege_section form.webform-client-form .webform-component select:active
 }
 body.language_section form.webform-client-form .webform-component select:focus,
 body.language_section form.webform-client-form .webform-component select:active {
-  border: 1px solid #b2cc15;
+  border: 1px solid #B2CCD8;
 }
 form.webform-client-form .webform-component .form-radios .form-item,
 form.webform-client-form .webform-component .form-checkboxes .form-item {
@@ -12116,7 +12116,7 @@ body.excollege_section .node.node-course .row .col-sm-12 .field-name-body a:focu
   text-decoration: underline;
 }
 body.language_section .node.node-course .row .col-sm-12 .field-name-body a {
-  color: #b2cc15;
+  color: #B2CCD8;
   text-decoration: none;
 }
 body.language_section .node.node-course .row .col-sm-12 .field-name-body a:hover,
@@ -12125,7 +12125,7 @@ body.language_section .node.node-course .row .col-sm-12 .field-name-body a:focus
   text-decoration: underline;
 }
 body.language_section .node.node-course .row .col-sm-12 .field-name-body a {
-  color: #b2cc15;
+  color: #B2CCD8;
   text-decoration: none;
 }
 body.language_section .node.node-course .row .col-sm-12 .field-name-body a:hover,
@@ -12134,7 +12134,7 @@ body.language_section .node.node-course .row .col-sm-12 .field-name-body a:focus
   text-decoration: underline;
 }
 body.language_section .node.node-course .row .col-sm-12 .field-name-body a {
-  color: #b2cc15;
+  color: #B2CCD8;
   text-decoration: none;
 }
 body.language_section .node.node-course .row .col-sm-12 .field-name-body a:hover,
@@ -15840,7 +15840,7 @@ body.excollege_section .view.view-segment-pages .view-content .views-row a:focus
   text-decoration: underline;
 }
 body.language_section .view.view-segment-pages .view-content .views-row a {
-  color: #b2cc15;
+  color: #B2CCD8;
   text-decoration: none;
 }
 body.language_section .view.view-segment-pages .view-content .views-row a:hover,
@@ -15849,7 +15849,7 @@ body.language_section .view.view-segment-pages .view-content .views-row a:focus 
   text-decoration: underline;
 }
 body.language_section .view.view-segment-pages .view-content .views-row a {
-  color: #b2cc15;
+  color: #B2CCD8;
   text-decoration: none;
 }
 body.language_section .view.view-segment-pages .view-content .views-row a:hover,
@@ -15858,7 +15858,7 @@ body.language_section .view.view-segment-pages .view-content .views-row a:focus 
   text-decoration: underline;
 }
 body.language_section .view.view-segment-pages .view-content .views-row a {
-  color: #b2cc15;
+  color: #B2CCD8;
   text-decoration: none;
 }
 body.language_section .view.view-segment-pages .view-content .views-row a:hover,
@@ -16149,7 +16149,7 @@ body.excollege_section .view.view-contacts .view-content .views-bootstrap-tab-pl
   color: #7B6C65;
 }
 body.language_section .view.view-contacts .view-content .views-bootstrap-tab-plugin-style .tab-content .tab-pane .tab-pane-item .views-field-title {
-  color: #b2cc15;
+  color: #B2CCD8;
 }
 /*
  *  View courses component
@@ -16197,7 +16197,7 @@ body.excollege_section .view.view-courses .view-content .panel-group .main-title
   color: #7B6C65;
 }
 body.language_section .view.view-courses .view-content .panel-group .main-title h1 {
-  color: #b2cc15;
+  color: #B2CCD8;
 }
 .view.view-courses .view-content .panel-group .main-description {
   margin: 15px 0 0;
@@ -16294,7 +16294,7 @@ body.excollege_section .view.view-courses .view-content .panel-group .panel .pan
   background-color: #7B6C65;
 }
 body.language_section .view.view-courses .view-content .panel-group .panel .panel-heading:hover {
-  background-color: #b2cc15;
+  background-color: #B2CCD8;
 }
 @media screen and (min-width: 480px) {
   .view.view-courses .view-content .panel-group .panel .panel-heading .panel-title a,
@@ -16346,8 +16346,8 @@ body.excollege_section .view.view-courses .view-content .panel-group .panel .pan
   border-bottom: 1px solid #7B6C65;
 }
 body.language_section .view.view-courses .view-content .panel-group .panel .panel-collapse .panel-body {
-  border-top: 1px solid #b2cc15;
-  border-bottom: 1px solid #b2cc15;
+  border-top: 1px solid #B2CCD8;
+  border-bottom: 1px solid #B2CCD8;
 }
 /*
  *  View Course-tabs component
@@ -16663,7 +16663,7 @@ body.language_section .view.view-course-times .view-filters .views-exposed-form 
 body.language_section .view.view-course-times-search .view-filters .views-exposed-form .views-exposed-widget .views-widget .form-item select:focus,
 body.language_section .view.view-course-times .view-filters .views-exposed-form .views-exposed-widget .views-widget .form-item select:active,
 body.language_section .view.view-course-times-search .view-filters .views-exposed-form .views-exposed-widget .views-widget .form-item select:active {
-  border: 1px solid #b2cc15;
+  border: 1px solid #B2CCD8;
 }
 .view.view-course-times .view-content,
 .view.view-course-times-search .view-content {
@@ -17128,10 +17128,10 @@ body.page-bildungsnavigator #bildungsnavigator_main_wrapper #bildungsnavigator_w
 }
 #bildungsnavigator_main_wrapper .course_item.tid_107 {
   background-color: #F9DCD1;
-  border-top: 7px solid #b2cc15;
+  border-top: 7px solid #B2CCD8;
 }
 #bildungsnavigator_main_wrapper .course_item.tid_107 a {
-  background-color: #b2cc15;
+  background-color: #B2CCD8;
 }
 #bildungsnavigator_main_wrapper .course_item.tid_null {
   background-color: #DDDFDE;
@@ -17630,12 +17630,12 @@ header#navbar .container .navbar-collapse nav ul.menu li.menu-ex a.active {
   }
 }
 header#navbar .container .navbar-collapse nav ul.menu li.menu-la {
-  border-bottom: 6px solid #b2cc15;
+  border-bottom: 6px solid #B2CCD8;
 }
 header#navbar .container .navbar-collapse nav ul.menu li.menu-la a:hover,
 header#navbar .container .navbar-collapse nav ul.menu li.menu-la a.active-trail,
 header#navbar .container .navbar-collapse nav ul.menu li.menu-la a.active {
-  color: #b2cc15;
+  color: #B2CCD8;
   background: none;
 }
 @media screen and (min-width: 768px) {
@@ -17643,7 +17643,7 @@ header#navbar .container .navbar-collapse nav ul.menu li.menu-la a.active {
   header#navbar .container .navbar-collapse nav ul.menu li.menu-la a.active-trail,
   header#navbar .container .navbar-collapse nav ul.menu li.menu-la a.active {
     color: #fff;
-    background-color: #b2cc15;
+    background-color: #B2CCD8;
   }
 }
 header#navbar .container .navbar-collapse nav ul.menu.secondary {
@@ -17809,7 +17809,7 @@ body.excollege_section .main-container .container .row section h1.page-header {
   color: #7B6C65;
 }
 body.language_section .main-container .container .row section h1.page-header {
-  color: #b2cc15;
+  color: #B2CCD8;
 }
 .main-container .container .row section .messages {
   margin-top: 20px;
