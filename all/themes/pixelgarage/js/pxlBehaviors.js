@@ -105,19 +105,112 @@
   };
 
   /**
-   * Brochure webform.
+   * Scrolls smoothly to info event tab due to menu click.
+   */
+  Drupal.behaviors.smoothScrolltoInfoEventTab = {
+    attach: function(context, settings) {
+      var $courseBlockMenu = $('#block-menu-menu-course-blocks'),
+        $infoEventMenu = $courseBlockMenu.find('ul.menu>li.menu.infoevent');
+
+      $infoEventMenu.once('clicked', function () {
+        $(this).on('click', function () {
+          var $target = $('#views-bootstrap-tab-course-tabs'),
+              $infoTab = $target.find('.tab-info-events > a');
+
+          // click tab
+          $infoTab.click();
+
+          // scroll to tab section
+          if ($target.length > 0) {
+            var topPos = $target.offset().top;
+            $('html, body').animate({scrollTop: topPos-30}, 1000, 'swing');
+            return false;
+          }
+          return true;
+        });
+      });
+    }
+  };
+
+  /**
+   * Enhance the links to Consulting- and Brochure-Form with a parameter holding the segment or course id
+   * of the current webpage origin.
+   */
+  Drupal.behaviors.enhanceBlockMenuWithParameters = {
+    attach: function() {
+      var $blockMenu = $('#page-header .block-menu'),
+        $menuLinks = $blockMenu.find('ul.menu>li.menu.consulting').add('ul.menu>li.menu.brochures');
+
+      //
+      // find segment taxonomy id or course node id
+      var body_classes = $("body").attr("class").toString().split(' '),
+        tid = false,
+        nid = false;
+      $.each(body_classes, function (i, className) {
+        if (className.startsWith('page-taxonomy-term-')) {
+          className = className.replace('page-taxonomy-term-', '');
+          if (className.length > 0) {
+            tid = className;
+          }
+        }
+        else if (className.startsWith('page-node-')) {
+          className = className.replace('page-node-', '');
+          if (className.length > 0) {
+            nid = className;
+          }
+        }
+      });
+
+      //
+      // attach specific parameter to menu on click
+      $menuLinks.once('clicked', function() {
+        $(this).on('click', function() {
+          var href = $(this).find('a').attr('href');
+
+          if (tid) {
+            window.location = href + '?tid=' + tid;
+            return false;
+          }
+          else if (nid) {
+            window.location = href + '?nid=' + nid;
+            return false;
+          }
+        });
+      });
+    }
+  };
+
+  /**
+   * Consulting / Brochure webforms.
    *
    * Handles the dynamically shown select boxes in the brochure webform.
    */
   Drupal.behaviors.dynamicSelectBoxes = {
     attach: function () {
-      var $webform = $('#webform-client-form-1336, #webform-client-form-14006'),
+      var $webform = $('#webform-client-form-1335, #webform-client-form-1336, #webform-client-form-14006'),
+        $compInteresse = $webform.find('.webform-component--interesse'),
         $selectInteresse = $webform.find('#edit-submitted-interesse'),
         $compAbschluss = $webform.find('.webform-component--abschluss'),
         $selectAbschluss = $webform.find('#edit-submitted-abschluss'),
         $compLehrgang = $webform.find('.webform-component--lehrgang'),
-        $selectLehrgang = $webform.find('#edit-submitted-lehrgang');
+        $selectLehrgang = $webform.find('#edit-submitted-lehrgang'),
+        _getURLParameter = function (sParamName) {
+          var sPageURL = window.location.search.substring(1);
+          var sURLParams = sPageURL.split('&');
 
+          for (var i = 0; i < sURLParams.length; i++) {
+            var sParam = sURLParams[i].split('=');
+            if (sParam[0] === sParamName) {
+              return sParam[1];
+            }
+          }
+          return false;
+        };
+
+      // only for specific webforms
+      if ($webform.length <= 0) return;
+
+      //
       // hide select boxes and reset interesse select box
       $compAbschluss.hide();
       $compLehrgang.hide();
@@ -153,8 +246,34 @@
 
         });
       });
+
+      //
+      // select correct option, if available in url
+      var tid = _getURLParameter('tid'),
+          nid = _getURLParameter('nid');
+
+      if (tid) {
+        // called from segment page, pre-fill taxonomy (interesse) select box
+        $selectInteresse.val(tid).trigger('change');
+      }
+      else if (nid) {
+        // called from course page, set only course select box, hide others
+        $compInteresse.hide();
+        $selectInteresse.val(1); // KVCollege
+        $compAbschluss.hide();
+        $selectAbschluss.val(63); // Lehrgänge
+        $selectLehrgang.html('<option>Lehrgänge werden geladen...</option>');
+        $compLehrgang.show(300);
+        // load course
+        $selectLehrgang.load(Drupal.settings.basePath + 'get_course/' + nid, function (response, status, xhr) {
+          if (status == "error") {
+            $selectLehrgang.html("Keine Daten gefunden");
+          }
+        });
+      }
     }
   };
+
 
   /**
    * ECDL webform
