@@ -1,13 +1,9 @@
 #
 # Apache/PHP/Drupal settings:
 #
-#AuthUserFile /var/www/vhosts/stage.hso.ch/httpdocs/.htpasswd_shared
-#AuthType Basic
-#AuthName "Website Access"
-#Require valid-user
 
 # Protect files and directories from prying eyes.
-<FilesMatch "\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl)(~|\.sw[op]|\.bak|\.orig|\.save)?$|^(\..*|Entries.*|Repository|Root|Tag|Template)$|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig\.save)$">
+<FilesMatch "\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl)(~|\.sw[op]|\.bak|\.orig|\.save)?$|^(\..*|Entries.*|Repository|Root|Tag|Template|composer\.(json|lock))$|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig\.save)$">
   Order allow,deny
 </FilesMatch>
 
@@ -61,6 +57,9 @@ DirectoryIndex index.php index.html index.htm
 # Various rewrite rules.
 <IfModule mod_rewrite.c>
   RewriteEngine on
+  # Redirects all visitors to the secure url.
+  #RewriteCond %{HTTPS} =off
+  #RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L,R=301] 
 
   # Set "protossl" to "s" if we were accessed via https://.  This is used later
   # if you enable "www." stripping or enforcement, in order to ensure that
@@ -147,3 +146,78 @@ DirectoryIndex index.php index.html index.htm
     </FilesMatch>
   </IfModule>
 </IfModule>
+
+# Add headers to all responses.
+<IfModule mod_headers.c>
+  # Disable content sniffing, since it's an attack vector.
+  Header always set X-Content-Type-Options nosniff
+</IfModule>
+
+RewriteCond %{HTTP_HOST} ^hbs\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.hbs\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^hbs\-kmz\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.hbs\-kmz\.ch$
+RewriteRule ^(.*)$ "http\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^kmz\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.kmz\.ch$
+RewriteRule ^(.*)$ "http\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^hfw\-rapperswil\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.hfw\-rapperswil\.ch$
+RewriteRule ^(.*)$ "http\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^hfw\-rappi\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.hfw\-rappi\.ch$
+RewriteRule ^(.*)$ "http\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^burghof\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.burghof\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^xn\-\-brofachausbildung\-22b\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.xn\-\-brofachausbildung\-22b\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^xn\-\-brofachkurs\-thb\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.xn\-\-brofachkurs\-thb\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^xn\-\-brofachschule\-wob\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.xn\-\-brofachschule\-wob\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^xn\-\-fhrungslehrgang\-zvb\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.xn\-\-fhrungslehrgang\-zvb\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^xn\-\-fhrungslehrgnge\-clb01b\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.xn\-\-fhrungslehrgnge\-clb01b\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^hfwr\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.hfwr\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^hfwrapperswil\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.hfwrapperswil\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^hhw\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.hhw\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^xn\-\-kaderlehrgnge\-kfb\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.xn\-\-kaderlehrgnge\-kfb\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^kvlehre\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.kvlehre\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^pc\-anwender\.ch$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.pc\-anwender\.ch$
+RewriteRule ^(.*)$ "https\:\/\/hbskmz\.ch\/$1" [R=301,L]
+
