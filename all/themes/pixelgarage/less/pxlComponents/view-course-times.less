@@ -13,6 +13,65 @@
 
 // General settings
 // -------------------------
+
+.view.view-course-times.view-display-id-page_info_events {
+  .view-header,
+  .view-filters {
+    padding: 15px 0 30px;
+  }
+
+  .view-content {
+    // course times table
+    padding: 0;
+
+    table {
+      tbody {
+        tr {
+          td {
+            &.views-field-field-course-date {
+              white-space: nowrap;
+              line-height: 25px;
+            }
+
+            &.views-field-field-address {
+              min-width: 250px;
+              width: 25%;
+              text-align: left;
+            }
+
+            &.views-field-body {
+              min-width: 250px;
+              width: 25%;
+              p {
+                font-size: @table-font-size;
+              }
+            }
+
+            &.views-field-field-brand {
+              text-align: center;
+
+              img {
+                height: 30px;
+              }
+            }
+
+            &.views-field-nothing {
+              text-align: right;
+
+              a {
+                #pxl-mixins.button-normal;
+                display: inline-block;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+
 .view.view-course-times,
 .view.view-course-times-search {
   .view-header {
@@ -30,7 +89,7 @@
   }
 
   .view-filters {
-    padding: 0 15px;
+    padding: 0 15px 15px;
     .views-exposed-form {
       .views-exposed-widget {
         label {
@@ -57,7 +116,7 @@
 
             select {
               #pxl-mixins.no-appearance;
-              padding: 0 10px;
+              padding: 0 25px 0 10px;
               height: auto;
               font-family: @pxl-text-font-light;
               font-size: @font-size-base;
@@ -91,9 +150,6 @@
                 body.excollege_section & {
                   border: 1px solid @pxl-color-hso-ex;
                 }
-                body.language_section & {
-                  border: 1px solid @pxl-color-hso-la;
-                }
               }
             }
           }
@@ -108,6 +164,17 @@
 
     table {
       width: 100%;
+
+      caption {
+        // Header for grouped tables
+        margin: 15px 0 0;
+        padding: 20px 0 24px;
+        font-family: @pxl-text-font-medium;
+        font-size: @font-size-base + 2;
+        color: @text-color;
+        line-height: 1;
+        border-top: 1px solid @pxl-border-color;
+      }
 
       thead {
         tr {
@@ -187,7 +254,7 @@
               text-align: center;
 
               img {
-                max-height: 30px;
+                height: 30px;
               }
             }
 

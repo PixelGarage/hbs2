@@ -124,7 +124,6 @@ function pixelgarage_preprocess_page(&$vars) {
   // replace logo with .svg
   //$vars['logo'] = str_replace(array('.jpg', '.png'), '.svg', $vars['logo']);
 
-
   //
   // get exposed search form, if available (to render it in modal dialog)
   $exposed_search_form_id = 'views_f8fbd4e2a199efa3b091b51b9cbe2130';
@@ -202,7 +201,14 @@ function _random_testimonials() {
     }
   }
 
-  // return a random testimonial
+  // return a random testimonial list
+  if (count($testimonials) <= 1) {
+    $ret = array();
+    foreach ($testimonials as $key => $testimonial) {
+      $ret[] = array($key => node_view($testimonial, 'teaser'));
+    }
+    return $ret;
+  }
   $keys = array_rand($testimonials, 2);
   $i1 = mt_rand(0, 9);
   return array(
@@ -241,6 +247,7 @@ function pixelgarage_preprocess_views_bootstrap_accordion_plugin_style(&$vars) {
   $active_course_subject = '';
   foreach ($vars['view']->result as $key => $field) {
     $course_subject = strip_tags($view->style_plugin->get_field($key, 'field_fachgebiet'));
+    $course_subject = !empty($course_subject) ? $course_subject : 'Lehrgänge';
 
     if ($active_course_subject != $course_subject) {
       $vars['course_subjects'][$key] = $course_subject;
@@ -251,11 +258,13 @@ function pixelgarage_preprocess_views_bootstrap_accordion_plugin_style(&$vars) {
         $vars['course_subject_titles'][$key] = t('Kaderschule');
         $vars['course_subject_description'][$key] = '';
       } else if ($course_subject == 'Diplomstudium HF') {
-        $vars['course_subject_titles'][$key] = t('Höhere Fachschule für Wirtschaft');
+        $vars['course_subject_titles'][$key] = t('Höhere Fachschule für Wirtschaft & Informatik');
         $vars['course_subject_description'][$key] = '';
       } else if ($course_subject == 'Bachelor-Studium') {
         $vars['course_subject_titles'][$key] = t('Fachhochschule HFH');
-        $vars['course_subject_description'][$key] = t('HFH ist ein bekannter Abschluss');
+        $vars['course_subject_description'][$key] =
+          t('Mit der <a href="@hfh_url" target="_blank">Hamburger Fern-Hochschule</a> führen wir eine Exklusivität in der Schweizer Wirtschaftsbildung: An der HSO haben Sie die Möglichkeit (ohne Berufsmatura), integral im HFW-Diplomstudium exakt abgestimmte Module des Fachhochschulprogramms zu absolvieren. So schliessen Sie nach insgesamt 4½ Jahren den nach Bologna-Richtlinien anerkannten Bachelor of Arts in Betriebswirt­schaft ab. Dabei erreichen Sie nach dem 1. Jahr den Zwischenabschluss Höheres Wirtschaftsdiplom VSK/HWD, nach 3 Jahren den eidge­nössisch geschützten «Dipl. Betriebswirtschafter / -in HF» und ab dem 4. Studienjahr konzentrieren Sie sich auf die restlichen Bachelor-Module und erlangen damit den Bachelor of Arts in Betriebswirtschaft (180 ECTS).',
+            array('@hfh_url' => 'http://www.hamburger-fh.de/'));
       } else {
         $vars['course_subject_titles'][$key] = '';
         $vars['course_subject_description'][$key] = '';

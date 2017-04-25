@@ -34,14 +34,20 @@
 			<?php print $rows; ?>
 		<?php else: ?>
 			<ul class="nav nav-tabs">
-				<li class="active">
+				<li class="tab-startdaten active">
 					<a href="#tab-startdaten" data-toggle="tab">Startdaten</a>
 				</li>
+        <li class="tab-info-events">
+          <a href="#tab-info-events" data-toggle="tab">Informationsanlässe</a>
+        </li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active" id="tab-startdaten">
 					<?php print views_embed_view('course_times'); ?>
 				</div>
+        <div class="tab-pane" id="tab-info-events">
+          <?php print views_embed_view('course_times', 'block_info_events'); ?>
+        </div>
 			</div>
 		<?php endif; ?>
 	</div>
