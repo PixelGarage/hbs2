@@ -218,6 +218,52 @@ function _random_testimonials() {
 }
 
 /* =============================================================================
+ *      Course-times views
+ * ========================================================================== */
+/**
+ * Converts the grouped tables into tabs for all course-times views.
+ */
+function pixelgarage_preprocess_views_view(&$vars) {
+  $view = &$vars['view'];
+  if ($view->name != 'course_times') return;
+
+  //
+  // split rendered rows into tables again, if any
+  // create location tabs and date headers
+  $vars['tabs'] = array();
+  if (empty($vars['rows'])) return;
+
+  // get view-grouping elements
+  $view_groupings = explode('<div class="view-grouping">', $vars['rows']);
+  array_shift($view_groupings); // delete null element at beginning
+  foreach ($view_groupings as $view_grouping) {
+    $content = explode('<div class="view-grouping-content">', $view_grouping);
+
+    // get location tab text
+    $tab_title = str_replace('<div class="view-grouping-header">', '', $content[0]);
+    $tab_title = str_replace('</div>', '', $tab_title);
+    $tabs[$tab_title] = array();
+
+    // get date headers and tables
+    $resp_tables = substr($content[1], 0, -12); // delete </div> at end
+    $tables = explode('<div class="table-responsive">', $resp_tables);
+    array_shift($tables); // delete null element at beginning
+    $tables = array_map(function($table) { return '<div class="table-responsive">' . $table; }, $tables);
+    foreach ($tables as $table) {
+      $splitters = explode('caption>', $table);
+      $date_title = str_replace('</', '', $splitters[1]);
+      $tabs[$tab_title][$date_title] = $table;
+    }
+  }
+
+  // sort arrays
+  ksort($tabs);
+  $vars['tabs'] = $tabs;
+
+}
+
+
+/* =============================================================================
  *      Segment page accordion
  * ========================================================================== */
 /**
@@ -310,7 +356,35 @@ function pixelgarage_preprocess_views_bootstrap_tab_plugin_style(&$vars) {
  * Implements a fading carousel for the banners.
  */
 function pixelgarage_preprocess_views_bootstrap_carousel_plugin_style(&$vars) {
+  $view = &$vars['view'];
+  if ($view->name != 'banners') return;
+
+  // implements fading transition (css)
   $vars['classes_array'][] = 'carousel-fade';
+
+  // implement interval per slide
+  foreach ($view->result as $index => $result) {
+    $node = $result->_field_data['nid']['entity'];
+
+    // check if banner is valid
+    $now = time();
+    $start_timestamp = isset($node->field_validity_period[LANGUAGE_NONE][0]['value']) ?
+      strtotime($node->field_validity_period[LANGUAGE_NONE][0]['value']) : false;
+    $end_timestamp = isset($node->field_validity_period[LANGUAGE_NONE][0]['value2']) ?
+      strtotime($node->field_validity_period[LANGUAGE_NONE][0]['value2']) : false;
+    if ($start_timestamp && $end_timestamp && $start_timestamp > $now && $end_timestamp < $now) {
+      // banner is not valid
+      continue;
+    }
+
+    // set banner
+    $vars['banners'][] = $vars['rows'][$index];
+
+    // set slide duration if any
+    $interval = isset($node->field_interval[LANGUAGE_NONE][0]['value']) ?
+      $node->field_interval[LANGUAGE_NONE][0]['value']*1000 : 10000;
+    $vars['intervals'][] = $interval;
+  }
 }
 
 

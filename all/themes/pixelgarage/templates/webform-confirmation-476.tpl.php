@@ -26,8 +26,8 @@ if ($course_time_nid) {
 <div class="webform-confirmation">
   <p>Besten Dank für Ihre Anmeldung.<p>
   <ul>
-    <li>Die <a target="_blank" href="<?php print $pdf_link; ?>">Reservationsbestätigung (PDF)</a> können Sie nun herunterladen</li>
-    <li>Per E-Mail erhalten Sie dieselbe Reservationsbestätigung in einigen Minuten zugestellt</li>
+    <li>Die <a target="_blank" href="<?php print $pdf_link; ?>">Anmeldebestätigung (PDF)</a> können Sie nun herunterladen</li>
+    <li>Per E-Mail erhalten Sie dieselbe Anmeldebestätigung in einigen Minuten zugestellt</li>
   </ul>
   <h2>Anmeldenummer</h2>
   <p>Und dies ist Ihre Anmeldenummer: <b><?php echo str_pad($sid, 6, '0', STR_PAD_LEFT); ?></b><br />
@@ -65,7 +65,7 @@ if ($course_time_nid) {
       ga('ecommerce:addItem', {
         'id': '<?php print $sid; ?>-<?php print $submission->remote_addr; ?>',    // Transaction ID. Required
         'name': '<?php print addslashes($course->title); ?>',                     // Product name. Required
-        'sku': '<?php print $course_time_node->field_internal_id[LANGUAGE_NONE][0]['value']; ?>', // SKU/code
+        'sku': '<?php print $course_time_nid; ?>', // SKU/code
         'category': '<?php print addslashes($segment->name); ?>',                 // Category or variation
         'price': '<?php print $tracking_price; ?>',                               // Unit price
         'quantity': '1'                                                           // Quantity
