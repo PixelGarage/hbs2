@@ -16,13 +16,13 @@ function hso_refactoring_menu() {
   $items = array();
   $items['admin/config/system/hso/refactoring'] = array(
     'title' => 'Refactoring 2017',
-    'type' => MENU_NORMAL_ITEM,
+    'type' => MENU_LOCAL_TASK,
     'description' => t('Run the HSO Refactoring 2017'),
-    'access callback' => 'user_access',
-    'access arguments' => array('administer site configuration'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('hso_refactoring_settings_form'),
-    'weight' => -10,
+    'access callback' => 'user_access',
+    'access arguments' => array('administer site configuration'),
+    'weight' => 1,
   );
   return $items;
 }
