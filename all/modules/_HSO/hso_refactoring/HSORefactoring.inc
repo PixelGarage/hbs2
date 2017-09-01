@@ -15,7 +15,7 @@ class HSORefactoring extends Refactoring {
     14998 => 5942,  // KMZ Rapperswil -> HBS Rapperswil
     //6687 => 5942,   // HBS Rapperswil -> Rapperswil
     6686 => 6685,  // HMZ Baar -> Baar
-    //8803 => 579,    // BVS St.Gallen -> St.Gallen
+    8803 => 579,    // BVS St.Gallen -> St.Gallen
   );
 
 
