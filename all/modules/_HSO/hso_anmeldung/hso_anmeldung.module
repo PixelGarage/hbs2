@@ -21,7 +21,7 @@ define('ANMELDUNG_DEFAULT', 264);
 /**
  * Reservation Anmeldungs form.
  */
-define('ANMELDUNG_RESERVATION', 76045);
+define('ANMELDUNG_RESERVATION', 18057);
 
 /**
  * ECDL Anmeldungs form.

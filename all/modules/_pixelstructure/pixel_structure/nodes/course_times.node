@@ -1,5 +1,5 @@
 <?php
-$export_time = 1503054073;
+$export_time = 1504274142;
 $data = array(
   'bundles' => array(
     'course_times' => (object) array(
@@ -744,9 +744,6 @@ $data = array(
         'node' => array(
           0 => 'course_times',
         ),
-        'field_collection_item' => array(
-          0 => 'field_teaching_times',
-        ),
       ),
     ),
     'field_template' => array(
@@ -980,10 +977,10 @@ $data = array(
             'weight' => 0,
           ),
           'token' => array(
-            'type' => 'hidden',
             'label' => 'above',
+            'type' => 'hidden',
+            'weight' => '8',
             'settings' => array(),
-            'weight' => 0,
           ),
         ),
         'required' => 0,
@@ -1032,10 +1029,10 @@ $data = array(
             'weight' => 0,
           ),
           'token' => array(
-            'type' => 'hidden',
             'label' => 'above',
+            'type' => 'hidden',
+            'weight' => '6',
             'settings' => array(),
-            'weight' => 0,
           ),
         ),
         'required' => 0,
@@ -1074,7 +1071,7 @@ $data = array(
           'token' => array(
             'label' => 'hidden',
             'type' => 'entityreference_label',
-            'weight' => '5',
+            'weight' => '3',
             'settings' => array(
               'link' => FALSE,
               'bypass_access' => FALSE,
@@ -1209,10 +1206,10 @@ $data = array(
             'weight' => 0,
           ),
           'token' => array(
-            'type' => 'hidden',
             'label' => 'above',
+            'type' => 'hidden',
+            'weight' => '10',
             'settings' => array(),
-            'weight' => 0,
           ),
         ),
         'required' => 0,
@@ -1301,7 +1298,7 @@ $data = array(
           'token' => array(
             'label' => 'hidden',
             'type' => 'entityreference_label',
-            'weight' => '6',
+            'weight' => '4',
             'settings' => array(
               'link' => FALSE,
               'bypass_access' => FALSE,
@@ -1360,10 +1357,10 @@ $data = array(
             'weight' => 0,
           ),
           'token' => array(
-            'type' => 'hidden',
             'label' => 'above',
+            'type' => 'hidden',
+            'weight' => '11',
             'settings' => array(),
-            'weight' => 0,
           ),
         ),
         'required' => 0,
@@ -1412,10 +1409,10 @@ $data = array(
             'weight' => 0,
           ),
           'token' => array(
-            'type' => 'hidden',
             'label' => 'above',
+            'type' => 'hidden',
+            'weight' => '7',
             'settings' => array(),
-            'weight' => 0,
           ),
         ),
         'required' => 0,
@@ -1455,10 +1452,11 @@ $data = array(
             'weight' => 0,
           ),
           'token' => array(
-            'type' => 'hidden',
-            'label' => 'above',
+            'label' => 'hidden',
+            'type' => 'taxonomy_term_reference_plain',
+            'weight' => '5',
             'settings' => array(),
-            'weight' => 0,
+            'module' => 'taxonomy',
           ),
         ),
         'required' => 0,
@@ -1498,10 +1496,10 @@ $data = array(
             'weight' => 0,
           ),
           'token' => array(
-            'type' => 'hidden',
             'label' => 'above',
+            'type' => 'hidden',
+            'weight' => '9',
             'settings' => array(),
-            'weight' => 0,
           ),
         ),
         'required' => 0,
@@ -1564,10 +1562,10 @@ $data = array(
             'weight' => 0,
           ),
           'token' => array(
-            'type' => 'hidden',
             'label' => 'above',
+            'type' => 'hidden',
+            'weight' => '12',
             'settings' => array(),
-            'weight' => 0,
           ),
         ),
         'required' => 0,
