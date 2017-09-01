@@ -12,10 +12,10 @@ class HSORefactoring extends Refactoring {
   //
   // define location mapping nid_old => nid_new
   private $location_mapping = array(
-    15128 => 6687,  // KMZ Rapperswil -> HBS Rapperswil
+    14998 => 5942,  // KMZ Rapperswil -> HBS Rapperswil
     //6687 => 5942,   // HBS Rapperswil -> Rapperswil
-    32727 => 6685,  // HMZ Baar -> Baar
-    8803 => 579,    // BVS St.Gallen -> St.Gallen
+    6686 => 6685,  // HMZ Baar -> Baar
+    //8803 => 579,    // BVS St.Gallen -> St.Gallen
   );
 
 
