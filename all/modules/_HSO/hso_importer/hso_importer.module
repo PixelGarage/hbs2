@@ -24,7 +24,6 @@ function hso_importer_cron() {
  * Defines the configuration menu for HSO specific settings.
  *
  * Implements hook_menu().
- */
 function hso_importer_menu() {
 	$items = array();
 	$items['admin/config/system/hso'] = array(
@@ -39,6 +38,7 @@ function hso_importer_menu() {
 	);
   return $items;
 }
+ */
 
 /* --------------------------------------------------
  * HSO Import settings form
@@ -138,7 +138,6 @@ function hso_importer_settings_form($form, &$form_state) {
  * --------------------------------------------------*/
 /**
  * Runs the brand specific data import.
- */
 function _hso_importer_run_import() {
   // brand specifc data import
   $result = NULL;
@@ -174,6 +173,7 @@ function _hso_importer_run_import() {
   }
 
 }
+ */
 
 /**
  * The import for the brand.
