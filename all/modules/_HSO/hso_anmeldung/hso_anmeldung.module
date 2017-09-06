@@ -291,7 +291,7 @@ function hso_anmeldung_mail_alter(&$message) {
             if ($template == 'admin') {
               //
               // override recipient address for Admin mail and attach pdfs
-              $message['to'] = array('name' => 'HSO Anmeldedienst', 'mail' => 'info@hso.vantage.ch');
+              $message['to'] = array('name' => 'HSO Anmeldedienst', 'mail' => 'info' . ANMELDUNG_BRAND_EMAIL);
               $message['params']['attachments'][] = _hso_make_anmeldung_pdf($location, $segment, $contact, $grussformel, $course, $course_time_node, $webform_components, $submission_data, $sid, FALSE);
 
             }
