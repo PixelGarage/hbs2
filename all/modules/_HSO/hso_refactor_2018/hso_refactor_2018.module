@@ -1,0 +1,454 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ralph
+ * Date: 27.07.17
+ * Time: 17:11
+ */
+
+
+/**
+ * Defines the configuration menu for HSO specific tasks.
+ *
+ * Implements hook_menu().
+ */
+function hso_refactor_2018_menu() {
+  $items = array();
+  $items['admin/config/system/hso/refactoring_2018'] = array(
+    'title' => 'Refactoring 2018',
+    'type' => MENU_NORMAL_ITEM,
+    'description' => t('Run the HSO Refactoring 2018'),
+    'access callback' => 'user_access',
+    'access arguments' => array('administer site configuration'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('hso_refactor_2018_settings_form'),
+    'weight' => -10,
+  );
+  return $items;
+}
+
+/* --------------------------------------------------
+ * HSO Refactoring settings form
+ * --------------------------------------------------*/
+function hso_refactor_2018_settings_form($form, &$form_state) {
+  //
+  // run export / import
+  $form['hso_refactor_2018_export_import'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Export or import of HBS-KMZ language courses'),
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+    '#weight' => 0,
+  );
+  $form['hso_refactor_2018_export_import']['hso_export'] = array(
+    '#type' => 'submit',
+    '#value' => t('Export HBS-KMZ language courses'),
+    '#submit' => array('_hso_refactor_2018_hbskmz_export'),
+  );
+  $form['hso_refactor_2018_export_import']['hso_import'] = array(
+    '#type' => 'submit',
+    '#value' => t('Import HBS-KMZ language courses'),
+    '#submit' => array('_hso_refactor_2018_hbskmz_import'),
+  );
+
+  //
+  // run refactoring
+  $form['hso_refactor_2018_action_set'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Run all refactoring tasks'),
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+    '#weight' => 1,
+  );
+  $form['hso_refactor_2018_action_set']['hso_refactoring_last_run'] = array(
+    '#markup' => t('Last refactoring: @date', array('@date' => date('d.m.y G:i:s', variable_get('hso_refactor_2018_last_run', 0)))),
+    '#prefix' => '<div>',
+    '#suffix' => '</br></br></div>',
+  );
+  $form['hso_refactor_2018_action_set']['hso_refactoring_submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Refactor'),
+    '#submit' => array('_hso_refactor_2018_run_all'),
+  );
+  $form['hso_refactor_2018_action_set']['hso_refactoring_reset'] = array(
+    '#type' => 'submit',
+    '#value' => t('Reset'),
+    '#submit' => array('_hso_refactor_2018_reset'),
+  );
+
+  return system_settings_form($form);
+}
+
+function _hso_refactor_2018_run_all() {
+  try {
+    // initialize importer object
+    $hso_refactor = new HSORefactoring('hso_refactor_2018');
+    if (($step = $hso_refactor->runAll()) === true) {
+      drupal_set_message('Refactoring successfully completed', 'status');
+    }
+    else {
+      drupal_set_message(t('Refactoring stopped at step @step', array('@step' => $step)), 'warning');
+    }
+
+  } catch (Exception $ex) {
+    watchdog('HSO Refactoring', $ex->getMessage(), array(), WATCHDOG_ERROR);
+    drupal_set_message($ex->getMessage(), 'error');
+  }
+
+  // set time of refactoring
+  variable_set('hso_refactor_2018_last_run', REQUEST_TIME);
+}
+
+
+function _hso_refactor_2018_reset() {
+  $hso_refactor = new HSORefactoring('hso_refactor_2018');
+  $hso_refactor->reset();
+}
+
+//
+// Export and import of HBSKMZ language courses, course-times and course-tabs
+//
+function _hso_refactor_2018_hbskmz_export() {
+  //
+  // retrieve each language course with all its course-times
+  // and export it to a file
+  //
+  // get all language courses
+  $term_lang_tid = 107;
+  $courses = null;
+  $json_arr = array();
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'course')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_segment', 'tid', $term_lang_tid);
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $courses = node_load_multiple(array_keys($result['node']));
+  }
+
+  foreach($courses as $key => $course) {
+    $json_arr['course'] = (array)$course;
+    $json_arr['course_times'] = array();
+    $json_arr['course_tabs'] = array();
+
+    //
+    // get all course-times of the course
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'course_times')
+      ->propertyCondition('status', NODE_PUBLISHED)
+      ->fieldCondition('field_course', 'target_id', $key);
+    $result = $query->execute();
+    if (isset($result['node'])) {
+      $json_arr['course_times'] = node_load_multiple(array_keys($result['node']));
+    }
+
+    //
+    // get all course-tabs of the course
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'course_tabs')
+      ->propertyCondition('status', NODE_PUBLISHED)
+      ->fieldCondition('field_course', 'target_id', $key);
+    $result = $query->execute();
+    if (isset($result['node'])) {
+      $json_arr['course_tabs'] = node_load_multiple(array_keys($result['node']));
+    }
+
+    // encode json and write it to file
+    $json_str = json_encode($json_arr);
+    if ($json_str) {
+      $path = drupal_get_path('module', 'hso_refactor_2018') . '/data/courses/course_' . $key . '.json';
+      file_put_contents($path, $json_str);
+    }
+  }
+  drupal_set_message('Export of language courses successfully completed', 'status');
+}
+
+function _hso_refactor_2018_hbskmz_import() {
+  //
+  // delete all language course nodes with its course times and course tabs
+  $lang_tid = _segment_mapping(107);
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'course')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_segment', 'tid', $lang_tid);
+  $result = $query->execute();
+
+  if (isset($result['node'])) {
+    $course_nids = array_keys($result['node']);
+    foreach ($course_nids as $course_nid) {
+      node_delete($course_nid);
+
+      // delete all course times of course
+      $query = new EntityFieldQuery();
+      $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'course_times')
+        ->propertyCondition('status', NODE_PUBLISHED)
+        ->fieldCondition('field_course', 'target_id', $course_nid);
+      $result = $query->execute();
+      if ($result && !empty($result['node'])) {
+        node_delete_multiple(array_keys($result['node']));
+      }
+      // delete all course tabs of course
+      $query = new EntityFieldQuery();
+      $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'course_tabs')
+        ->propertyCondition('status', NODE_PUBLISHED)
+        ->fieldCondition('field_course', 'target_id', $course_nid);
+      $result = $query->execute();
+      if ($result && !empty($result['node'])) {
+        node_delete_multiple(array_keys($result['node']));
+      }
+    }
+    drupal_set_message('Cleanup: All language courses with its course times and course tabs deleted!', 'status');
+  }
+
+  //
+  // IMPORT ALL COURSE FILES
+  // scan all files in the data directory
+  $path = drupal_get_path('module', 'hso_refactor_2018') . '/data/courses/*.json';
+  $json_files = glob($path);
+
+  try {
+    foreach ($json_files as $idx => $filepath) {
+      // get and decode file data
+      $file_data = json_decode(file_get_contents($filepath), true);
+
+      //
+      // save course
+      $course =  (object)$file_data['course'];
+      unset($course->vid);
+      $course->nid = NULL;
+      $course->is_new = TRUE;
+
+      // map segment and course category to HSO values
+      $course->field_segment[LANGUAGE_NONE][0]['tid'] = _segment_mapping($course->field_segment[LANGUAGE_NONE][0]['tid']);
+      $course->field_fachgebiet[LANGUAGE_NONE][0]['tid'] = _course_category_mapping($course->field_fachgebiet[LANGUAGE_NONE][0]['tid']);
+
+      // TODO:map brochure?????
+      node_save($course);
+      $course_nid = $course->nid;
+
+      if ($course_nid) {
+        //
+        // import course-times of course and adapt course nid
+        $course_times = $file_data['course_times'];
+        foreach ($course_times as $key => $course_time) {
+          $course_time = (object)$course_time;
+          unset($course_time->vid);
+          $course_time->nid = NULL;
+          $course_time->is_new = TRUE;
+          $course_time->field_course[LANGUAGE_NONE][0]['target_id'] = $course_nid;
+          $course_time->field_location[LANGUAGE_NONE][0]['target_id'] =
+            _location_mapping($course_time->field_location[LANGUAGE_NONE][0]['target_id']);
+          node_save($course_time);
+        }
+
+        //
+        // import course-tabs of course and adapt course nid
+        $course_tabs = $file_data['course_tabs'];
+        foreach ($course_tabs as $key => $course_tab) {
+          $course_tab = (object)$course_tab;
+          unset($course_tab->vid);
+          $course_tab->nid = NULL;
+          $course_tab->is_new = TRUE;
+          $course_tab->field_course[LANGUAGE_NONE][0]['target_id'] = $course_nid;
+          node_save($course_tab);
+        }
+      }
+      // course imported
+      $msg = "Course {$course_nid} import successful.";
+      drupal_set_message($msg, 'status');
+    }
+    // all courses imported
+    drupal_set_message('IMPORT finished: All language courses with its course times and course tabs imported!', 'status');
+  }
+  catch (Exception $ex) {
+    drupal_set_message(t('Node Import failed: @msg', array('@msg' => $ex->getMessage())), 'error');
+    return;
+  }
+}
+
+/**
+ * Maps the segment tid of HBSKMZ to corresponding segment tid of HSO.
+ */
+function _segment_mapping($hbskmz_tid) {
+  $segment_map = array(
+    107 => 160,  // Sprachen
+  );
+  return $segment_map[$hbskmz_tid];
+}
+
+/**
+ * Maps the course category tid of HBSKMZ to corresponding course category tid of HSO.
+ */
+function _course_category_mapping($hbskmz_tid) {
+  $course_category_map = array(
+    108 => 149,// deutsch
+    109 => 150,// englisch
+    111 => 151,// französisch
+    110 => 152,// italienisch
+    125 => 153,// japanisch
+    116 => 154,// spanisch
+    112 => 155,// russisch
+    113 => 156,// chinesisch
+    114 => 157,// telc prüfungen
+    123 => 158,// vorbereitungskurse
+    // grundkurs
+  );
+  return $course_category_map[$hbskmz_tid];
+}
+
+/**
+ * Maps the location nid of HBSKMZ to corresponding location nid of HSO.
+ */
+function _location_mapping($hbskmz_nid) {
+  $location_map = array(
+    477 => 477,// Zürich Oerlikon
+    14796 => 5942,// Rapperswil
+    8804 => 8804,// Aarau
+    6687 => 5942,// HBSKMZ Rapperswil
+    6685 => 6685,// Baar
+    6684 => 6684,// Bern
+    6683 => 6683,// Luzern
+    585 => 585,// Basel
+    579 => 579,// St.Gallen
+    577 => 577,// Thun
+    17141 => 32578,// Zürich Altstetten
+    5942 => 5942,// HSO Rapperswil
+  );
+  return $location_map[$hbskmz_nid];
+}
+
+
+//
+//  Create segment map for courses
+//
+function __export_course_segment_map() {
+  $courses = array();
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'course')
+    ->propertyCondition('status', NODE_PUBLISHED);
+
+  $result = $query->execute();
+  if ($result && !empty($result['node'])) {
+    $courses = node_load_multiple(array_keys($result['node']));
+  }
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'course')
+    ->propertyCondition('status', NODE_NOT_PUBLISHED);
+
+  $result = $query->execute();
+  if ($result && !empty($result['node'])) {
+    $courses_unpublished = node_load_multiple(array_keys($result['node']));
+  }
+  else if (!$courses) return false;
+
+  //
+  // create file with all course segment mappings
+  $str = '$course_segment_mapping = array(' . "\n  // published";
+
+  foreach ($courses as $key => $course) {
+    $segment_tid = $course->field_segment[LANGUAGE_NONE][0]['tid'];
+    $category_tid = $course->field_fachgebiet[LANGUAGE_NONE][0]['tid'];
+    $str .= "  {$course->nid} => array('segment' => {$segment_tid}, 'category' => {$category_tid}), // {$course->title}\n";
+  }
+
+  $str .= "\n\n  // unpublished\n";
+
+  foreach ($courses_unpublished as $key => $course) {
+    $segment_tid = $course->field_segment[LANGUAGE_NONE][0]['tid'];
+    $category_tid = $course->field_fachgebiet[LANGUAGE_NONE][0]['tid'];
+    $str .= "  {$course->nid} => array('segment' => {$segment_tid}, 'category' => {$category_tid}), // {$course->title}\n";
+  }
+
+  $str .= ");";
+  $path = drupal_get_path('module', 'hso_refactor_2018') . '/data/course_segment_mapping.txt';
+  file_put_contents($path, $str);
+}
+
+
+//
+// Export/import nodes of a specific type.
+//
+function __hso_refactor_2018_node_export($bundle, $nid = false) {
+  //
+  // retrieve all nodes of a specific type and export it to a file
+  //
+  // get all nodes
+  $nodes = null;
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', $bundle)
+    ->propertyCondition('status', NODE_PUBLISHED);
+  if ($nid) {
+    $query->propertyCondition('nid', $nid);
+  }
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $nodes = node_load_multiple(array_keys($result['node']));
+  }
+
+  // encode json and write it to file
+  $json_str = json_encode($nodes);
+  if ($json_str) {
+    $path = drupal_get_path('module', 'hso_refactor_2018') . "/data/nodes/{$bundle}s.json";
+    file_put_contents($path, $json_str);
+  }
+}
+
+function __hso_refactor_2018_node_import($bundle, $nid = false) {
+  //
+  // Cleanup: delete all nodes of specific type
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', $bundle)
+    ->propertyCondition('status', NODE_PUBLISHED);
+  if ($nid) {
+    $query->propertyCondition('nid', $nid);
+  }
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    node_delete_multiple(array_keys($result['node']));
+  }
+
+  //
+  // scan all files in the data directory
+  $path = drupal_get_path('module', 'hso_refactor_2018') . "/data/nodes/{$bundle}s.json";
+  $json_files = glob($path);
+
+  foreach ($json_files as $idx => $filepath) {
+    // get and decode file data
+    $nodes = json_decode(file_get_contents($filepath), true);
+    $img_path = drupal_get_path('theme', 'pixelgarage') . '/images/';
+
+    foreach ($nodes as $key => $node) {
+      $node = (object)$node;
+      unset($node->vid);
+      $node->nid = NULL;
+      $node->is_new = TRUE;
+      if (isset($node->field_icon)) {
+        $node->field_icon[LANGUAGE_NONE][0]['fid'] = null;
+        $icon_origin = $img_path . $node->field_icon[LANGUAGE_NONE][0]['filename'];
+        file_unmanaged_copy($icon_origin, $node->field_icon[LANGUAGE_NONE][0]['uri']);
+        $node->field_icon[LANGUAGE_NONE][0] = (array)file_save((object)$node->field_icon[LANGUAGE_NONE][0]);
+      }
+
+      if (isset($node->field_picture)) {
+        $node->field_picture[LANGUAGE_NONE][0]['fid'] = null;
+        $picture_origin = $img_path . $node->field_picture[LANGUAGE_NONE][0]['filename'];
+        file_unmanaged_copy($picture_origin, $node->field_picture[LANGUAGE_NONE][0]['uri']);
+        $node->field_picture[LANGUAGE_NONE][0] = (array)file_save((object)$node->field_picture[LANGUAGE_NONE][0]);
+      }
+
+      node_save($node);
+    }
+  }
+}
+
